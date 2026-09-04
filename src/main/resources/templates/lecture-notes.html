@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:lang="${lang != null ? lang : 'en'}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${lang == 'de'
+        ? 'Vorlesungsskripte - Melih Gümüş'
+        : 'Lecture Notes - Melih Gümüş'}">
+        Lecture Notes - Melih Gümüş
+    </title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #111111;
+            color: #eeeeee;
+            font-family: Georgia, serif;
+        }
+
+        nav {
+            width: 100%;
+            min-height: 62px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 0 150px 0 20px;
+
+            background: rgba(0, 0, 0, 0.85);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+
+            backdrop-filter: blur(4px);
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            list-style: none;
+            gap: 26px;
+        }
+
+        nav a {
+            font-family: 'Cinzel', serif;
+            color: #e6e6e6;
+            text-decoration: none;
+            font-size: 0.76rem;
+            letter-spacing: 1.8px;
+            transition: color 0.25s ease;
+        }
+
+        nav a:hover {
+            color: #d4af37;
+        }
+
+        nav a.current-page {
+            color: #d4af37;
+        }
+
+        .lang-switch {
+            position: absolute;
+            right: 34px;
+            top: 50%;
+            transform: translateY(-50%);
+
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            white-space: nowrap;
+        }
+
+        .lang-switch a {
+            color: #777777;
+            margin: 0 5px;
+        }
+
+        .lang-switch a.active {
+            color: #d4af37;
+        }
+
+        .separator {
+            color: #555555;
+        }
+
+        .container {
+            max-width: 1120px;
+            margin: 72px auto;
+            padding: 0 25px 80px;
+        }
+
+        .page-heading {
+            text-align: center;
+            margin-bottom: 52px;
+        }
+
+        .page-heading h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.3rem;
+            font-weight: 500;
+            letter-spacing: 4px;
+            color: #ffffff;
+            margin-bottom: 14px;
+        }
+
+        .page-heading p {
+            max-width: 780px;
+            margin: 0 auto;
+            color: #aaaaaa;
+            line-height: 1.75;
+            font-size: 0.96rem;
+        }
+
+        .notes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .note-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-height: 280px;
+            padding: 30px;
+            overflow: hidden;
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            rgba(26,26,26,0.98),
+                            rgba(14,14,14,0.98)
+                    );
+
+            border: 1px solid rgba(255,255,255,0.06);
+            border-left: 3px solid #d4af37;
+
+            color: #eeeeee;
+            text-decoration: none;
+
+            transition:
+                    transform 0.25s ease,
+                    border-color 0.25s ease,
+                    background 0.25s ease;
+        }
+
+        .note-card:hover {
+            transform: translateY(-5px);
+
+            border-color: rgba(212,175,55,0.5);
+
+            background:
+                    linear-gradient(
+                            135deg,
+                            rgba(33,33,33,0.99),
+                            rgba(17,17,17,0.99)
+                    );
+        }
+
+        .note-number {
+            display: block;
+            color: #d4af37;
+
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            letter-spacing: 3px;
+
+            margin-bottom: 17px;
+        }
+
+        .note-card h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.22rem;
+            line-height: 1.45;
+            font-weight: 500;
+            letter-spacing: 1px;
+
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+
+        .note-card p {
+            color: #aaaaaa;
+            line-height: 1.7;
+            font-size: 0.93rem;
+            margin-bottom: 25px;
+        }
+
+        .open-text {
+            margin-top: auto;
+
+            color: #d4af37;
+
+            font-family: 'Cinzel', serif;
+            font-size: 0.73rem;
+            letter-spacing: 1.6px;
+        }
+
+        .note-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 130px;
+            height: 130px;
+
+            right: -65px;
+            bottom: -65px;
+
+            border: 1px solid rgba(212,175,55,0.08);
+            border-radius: 50%;
+        }
+
+        .last-card {
+            grid-column: 1 / -1;
+            width: calc(50% - 12px);
+            justify-self: center;
+        }
+
+        @media (max-width: 1050px) {
+
+            nav {
+                padding: 48px 20px 16px;
+            }
+
+            nav ul {
+                gap: 12px 18px;
+            }
+
+            .lang-switch {
+                top: 17px;
+                right: 20px;
+                transform: none;
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .container {
+                margin: 48px auto;
+                padding: 0 18px 60px;
+            }
+
+            .page-heading h1 {
+                font-size: 1.8rem;
+                letter-spacing: 2px;
+            }
+
+            .notes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .note-card {
+                min-height: auto;
+            }
+
+            .last-card {
+                grid-column: auto;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+<nav>
+
+    <!-- ENGLISH MENU -->
+    <ul th:if="${lang != 'de'}">
+
+        <li>
+            <a th:href="@{/biography(lang='en')}">
+                [BIOGRAPHY]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/essays(lang='en')}">
+                [ESSAYS]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/publications(lang='en')}">
+                [PUBLICATIONS]
+            </a>
+        </li>
+
+        <li>
+            <a class="current-page"
+               th:href="@{/lecture-notes(lang='en')}">
+                [LECTURE NOTES]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/research-group(lang='en')}">
+                [RESEARCH GROUP]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/contact(lang='en')}">
+                [CONTACT]
+            </a>
+        </li>
+
+    </ul>
+
+
+    <!-- GERMAN MENU -->
+    <ul th:if="${lang == 'de'}">
+
+        <li>
+            <a th:href="@{/biography(lang='de')}">
+                [BIOGRAFIE]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/essays(lang='de')}">
+                [ESSAYS]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/publications(lang='de')}">
+                [PUBLIKATIONEN]
+            </a>
+        </li>
+
+        <li>
+            <a class="current-page"
+               th:href="@{/lecture-notes(lang='de')}">
+                [VORLESUNGSSKRIPTE]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/research-group(lang='de')}">
+                [FORSCHUNGSGRUPPE]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/contact(lang='de')}">
+                [KONTAKT]
+            </a>
+        </li>
+
+    </ul>
+
+
+    <!-- LANGUAGE SWITCH -->
+    <div class="lang-switch">
+
+        <a th:href="@{/lecture-notes(lang='en')}"
+           th:classappend="${lang != 'de'} ? 'active' : ''">
+            EN
+        </a>
+
+        <span class="separator">|</span>
+
+        <a th:href="@{/lecture-notes(lang='de')}"
+           th:classappend="${lang == 'de'} ? 'active' : ''">
+            DE
+        </a>
+
+    </div>
+
+</nav>
+
+
+<main class="container">
+
+
+    <!-- ======================= -->
+    <!-- ENGLISH -->
+    <!-- ======================= -->
+
+    <div th:if="${lang != 'de'}">
+
+        <div class="page-heading">
+
+            <h1>Lecture Notes</h1>
+
+            <p>
+                Selected lecture notes, derivations and study materials
+                in theoretical and mathematical physics.
+            </p>
+
+        </div>
+
+
+        <div class="notes-grid">
+
+
+            <!-- 01 GENERAL RELATIVITY -->
+
+            <a class="note-card"
+               th:href="@{/lecture-notes/general-relativity(lang='en')}">
+
+                <span class="note-number">
+                    NOTE COLLECTION 01
+                </span>
+
+                <h2>
+                    General Relativity
+                </h2>
+
+                <p>
+                    Conceptual and mathematical notes on the foundations
+                    of general relativity, the equivalence principle,
+                    spacetime curvature, Einstein field equations,
+                    Schwarzschild geometry and Rindler motion.
+                </p>
+
+                <span class="open-text">
+                    OPEN NOTES →
+                </span>
+
+            </a>
+
+
+            <!-- 02 QUANTUM MECHANICS I -->
+
+            <a class="note-card"
+               th:href="@{/lecture-notes/quantum-mechanics-1(lang='en')}">
+
+                <span class="note-number">
+                    NOTE COLLECTION 02
+                </span>
+
+                <h2>
+                    Quantum Mechanics I
+                </h2>
+
+                <p>
+                    Introductory notes on wave packets,
+                    the Schrödinger equation, operators,
+                    one-dimensional potentials, quantum tunneling,
+                    uncertainty relations and the harmonic oscillator.
+                </p>
+
+                <span class="open-text">
+                    OPEN NOTES →
+                </span>
+
+            </a>
+
+
+            <!-- 03 QUANTUM MECHANICS II -->
+
+            <a class="note-card"
+               th:href="@{/lecture-notes/quantum-mechanics-2(lang='en')}">
+
+                <span class="note-number">
+                    NOTE COLLECTION 03
+                </span>
+
+                <h2>
+                    Quantum Mechanics II
+                </h2>
+
+                <p>
+                    Advanced notes on perturbation theory,
+                    degenerate systems, time-dependent perturbations,
+                    variational methods and selected problems
+                    in advanced quantum mechanics.
+                </p>
+
+                <span class="open-text">
+                    OPEN NOTES →
+                </span>
+
+            </a>
+
+
+            <!-- 04 QUANTUM INFORMATION THEORY -->
+
+            <a class="note-card"
+               th:href="@{/lecture-notes/quantum-information-theory(lang='en')}">
+
+                <span class="note-number">
+                    NOTE COLLECTION 04
+                </span>
+
+                <h2>
+                    Quantum Information Theory
+                </h2>
+
+                <p>
+                    Notes on qubits, spin systems,
+                    Stern–Gerlach measurements,
+                    angular-momentum coupling, entanglement,
+                    the EPR paradox, Bell states
+                    and Bell inequalities.
+                </p>
+
+                <span class="open-text">
+                    OPEN NOTES →
+                </span>
+
+            </a>
+
+
+            <!-- 05 QUANTUM FIELD THEORY -->
+
+            <a class="note-card last-card"
+               th:href="@{/lecture-notes/quantum-field-theory(lang='en')}">
+
+                <span class="note-number">
+                    NOTE COLLECTION 05
+                </span>
+
+                <h2>
+                    Quantum Field Theory
+                </h2>
+
+                <p>
+                    Introductory notes on field quantization,
+                    Lagrangian field theory, relativistic scalar fields,
+                    Lorentz symmetries, Noether's theorem
+                    and conserved currents.
+                </p>
+
+                <span class="open-text">
+                    OPEN NOTES →
+                </span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================= -->
+    <!-- GERMAN -->
+    <!-- ======================= -->
+
+    <div th:if="${lang == 'de'}">
+
+        <div class="page-heading">
+
+            <h1>Vorlesungsskripte</h1>
+
+            <p>
+                Ausgewählte Vorlesungsnotizen, Herleitungen und
+                Lernmaterialien aus der theoretischen und
+                mathematischen Physik.
+            </p>
+
+        </div>
+
+
+        <div class="notes-grid">
+
+
+            <!-- 01 GENERAL RELATIVITY -->
+
+            <a class="note-card"
+               th:href="@{/lecture-notes/general-relativity(lang='de')}">
+
+                <span class="note-number">
+                    NOTIZSAMMLUNG 01
+                </span>
+
+                <h2>
+                    Allgemeine Relativitätstheorie
+                </h2>
+
+                <p>
+                    Konzeptionelle und mathematische Notizen
+                    zu den Grundlagen der Allgemeinen Relativitätstheorie,
+                    zum Äquivalenzprinzip, zur Raumzeitkrümmung,
+                    zu den Einsteinschen Feldgleichungen,
+                    zur Schwarzschild-Geometrie und Rindler-Bewegung.
+                </p>
+
+                <span class="open-text">
+                    NOTIZEN ÖFFNEN →
+                </span>
+
+            </a>
+
+
+            <!-- 02 QUANTUM MECHANICS I -->
+
+            <a class="note-card"
+               th:href="@{/lecture-notes/quantum-mechanics-1(lang='de')}">
+
+                <span class="note-number">
+                    NOTIZSAMMLUNG 02
+                </span>
+
+                <h2>
+                    Quantenmechanik I
+                </h2>
+
+                <p>
+                    Einführende Notizen zu Wellenpaketen,
+                    Schrödinger-Gleichung, Operatoren,
+                    eindimensionalen Potentialen,
+                    Quantentunneln, Unschärferelationen
+                    und dem harmonischen Oszillator.
+                </p>
+
+                <span class="open-text">
+                    NOTIZEN ÖFFNEN →
+                </span>
+
+            </a>
+
+
+            <!-- 03 QUANTUM MECHANICS II -->
+
+            <a class="note-card"
+               th:href="@{/lecture-notes/quantum-mechanics-2(lang='de')}">
+
+                <span class="note-number">
+                    NOTIZSAMMLUNG 03
+                </span>
+
+                <h2>
+                    Quantenmechanik II
+                </h2>
+
+                <p>
+                    Fortgeschrittene Notizen zur Störungstheorie,
+                    zu entarteten Systemen,
+                    zeitabhängigen Störungen,
+                    Variationsmethoden und ausgewählten Problemen
+                    der fortgeschrittenen Quantenmechanik.
+                </p>
+
+                <span class="open-text">
+                    NOTIZEN ÖFFNEN →
+                </span>
+
+            </a>
+
+
+            <!-- 04 QUANTUM INFORMATION THEORY -->
+
+            <a class="note-card"
+               th:href="@{/lecture-notes/quantum-information-theory(lang='de')}">
+
+                <span class="note-number">
+                    NOTIZSAMMLUNG 04
+                </span>
+
+                <h2>
+                    Quanteninformationstheorie
+                </h2>
+
+                <p>
+                    Notizen zu Qubits, Spinsystemen,
+                    Stern–Gerlach-Messungen,
+                    Drehimpulskopplung, Verschränkung,
+                    dem EPR-Paradoxon,
+                    Bell-Zuständen und Bell-Ungleichungen.
+                </p>
+
+                <span class="open-text">
+                    NOTIZEN ÖFFNEN →
+                </span>
+
+            </a>
+
+
+            <!-- 05 QUANTUM FIELD THEORY -->
+
+            <a class="note-card last-card"
+               th:href="@{/lecture-notes/quantum-field-theory(lang='de')}">
+
+                <span class="note-number">
+                    NOTIZSAMMLUNG 05
+                </span>
+
+                <h2>
+                    Quantenfeldtheorie
+                </h2>
+
+                <p>
+                    Einführende Notizen zur Feldquantisierung,
+                    Lagrange-Feldtheorie,
+                    relativistischen Skalarfeldern,
+                    Lorentz-Symmetrien,
+                    dem Noether-Theorem und Erhaltungsströmen.
+                </p>
+
+                <span class="open-text">
+                    NOTIZEN ÖFFNEN →
+                </span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:lang="${lang != null ? lang : 'en'}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${lang == 'de'
+        ? 'Quantenfeldtheorie - Melih Gümüş'
+        : 'Quantum Field Theory - Melih Gümüş'}">
+        Quantum Field Theory - Melih Gümüş
+    </title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #111;
+            color: #eee;
+            font-family: Georgia, serif;
+        }
+
+        nav {
+            height: 62px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: rgba(0,0,0,0.85);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .back-link {
+            color: #eee;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.78rem;
+            letter-spacing: 2px;
+        }
+
+        .back-link:hover {
+            color: #d4af37;
+        }
+
+        .lang-switch {
+            position: absolute;
+            right: 35px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: 'Cinzel', serif;
+            font-size: 0.76rem;
+            letter-spacing: 2px;
+        }
+
+        .lang-switch a {
+            color: #888;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .lang-switch a.active {
+            color: #d4af37;
+        }
+
+        .separator {
+            color: #555;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 70px auto;
+            padding: 0 25px 80px;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            font-weight: 500;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            text-align: center;
+            max-width: 760px;
+            margin: 0 auto 45px;
+            color: #aaa;
+            line-height: 1.7;
+        }
+
+        .pdf-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .pdf-item {
+            padding: 24px;
+            background: rgba(20,20,20,0.88);
+            border-left: 3px solid #d4af37;
+            transition: 0.25s;
+        }
+
+        .pdf-item:hover {
+            transform: translateX(4px);
+            background: rgba(30,30,30,0.96);
+        }
+
+        .pdf-number {
+            display: block;
+            margin-bottom: 8px;
+            color: #d4af37;
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+        }
+
+        .pdf-item h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .pdf-item p {
+            color: #aaa;
+            font-size: 0.94rem;
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .pdf-link {
+            display: inline-block;
+            padding: 8px 13px;
+            border: 1px solid #444;
+            background: #191919;
+            color: white;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.76rem;
+            letter-spacing: 1px;
+        }
+
+        .pdf-link:hover {
+            background: #d4af37;
+            color: #111;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                margin: 45px auto;
+                padding: 0 18px 60px;
+            }
+
+            .lang-switch {
+                right: 18px;
+            }
+
+            h1 {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+
+    <a th:if="${lang != 'de'}"
+       th:href="@{/lecture-notes(lang='en')}"
+       class="back-link">
+        ← [LECTURE NOTES]
+    </a>
+
+    <a th:if="${lang == 'de'}"
+       th:href="@{/lecture-notes(lang='de')}"
+       class="back-link">
+        ← [VORLESUNGSSKRIPTE]
+    </a>
+
+    <div class="lang-switch">
+
+        <a th:href="@{/lecture-notes/quantum-field-theory(lang='en')}"
+           th:classappend="${lang != 'de'} ? 'active' : ''">
+            EN
+        </a>
+
+        <span class="separator">|</span>
+
+        <a th:href="@{/lecture-notes/quantum-field-theory(lang='de')}"
+           th:classappend="${lang == 'de'} ? 'active' : ''">
+            DE
+        </a>
+
+    </div>
+
+</nav>
+
+<div class="container">
+
+    <!-- ========================= -->
+    <!-- ENGLISH -->
+    <!-- ========================= -->
+
+    <div th:if="${lang != 'de'}">
+
+        <h1>Quantum Field Theory</h1>
+
+        <p class="subtitle">
+            Introductory lecture notes on field quantization,
+            Lagrangian field theory, relativistic fields,
+            Lorentz symmetries and conservation laws.
+        </p>
+
+        <div class="pdf-list">
+
+            <!-- 01 -->
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTE 01
+                </span>
+
+                <h2>
+                    Harmonic Oscillator and Field Quantization
+                </h2>
+
+                <p>
+                    Introductory notes connecting the quantum harmonic
+                    oscillator and creation–annihilation operators with
+                    the basic ideas underlying field quantization.
+                </p>
+
+                <a class="pdf-link"
+                   href="/notes/quantum-field-theory/01-harmonic-oscillator-and-field-quantization.pdf"
+                   target="_blank">
+                    VIEW PDF
+                </a>
+
+            </div>
+
+
+            <!-- 02 -->
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTE 02
+                </span>
+
+                <h2>
+                    Lagrangian Density and Field Equations
+                </h2>
+
+                <p>
+                    Notes on the transition from particle mechanics
+                    to fields, including the Lagrangian density,
+                    the action principle and Euler–Lagrange equations
+                    for classical fields.
+                </p>
+
+                <a class="pdf-link"
+                   href="/notes/quantum-field-theory/02-lagrangian-density-and-field-equations.pdf"
+                   target="_blank">
+                    VIEW PDF
+                </a>
+
+            </div>
+
+
+            <!-- 03 -->
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTE 03
+                </span>
+
+                <h2>
+                    Relativistic Scalar Fields
+                </h2>
+
+                <p>
+                    Introduction to relativistic field descriptions
+                    and scalar fields, emphasizing the structure
+                    of field equations in a relativistic framework.
+                </p>
+
+                <a class="pdf-link"
+                   href="/notes/quantum-field-theory/03-relativistic-scalar-fields.pdf"
+                   target="_blank">
+                    VIEW PDF
+                </a>
+
+            </div>
+
+
+            <!-- 04 -->
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTE 04
+                </span>
+
+                <h2>
+                    Lorentz Transformations and Field Symmetries
+                </h2>
+
+                <p>
+                    Notes on Lorentz transformations and the role
+                    of spacetime symmetries in relativistic
+                    field theories.
+                </p>
+
+                <a class="pdf-link"
+                   href="/notes/quantum-field-theory/04-lorentz-transformations-and-field-symmetries.pdf"
+                   target="_blank">
+                    VIEW PDF
+                </a>
+
+            </div>
+
+
+            <!-- 05 -->
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTE 05
+                </span>
+
+                <h2>
+                    Noether Theorem and Conserved Currents
+                </h2>
+
+                <p>
+                    Notes on continuous symmetries, Noether's theorem
+                    and the connection between field symmetries
+                    and conserved currents.
+                </p>
+
+                <a class="pdf-link"
+                   href="/notes/quantum-field-theory/05-noether-theorem-and-conserved-currents.pdf"
+                   target="_blank">
+                    VIEW PDF
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- GERMAN -->
+    <!-- ========================= -->
+
+    <div th:if="${lang == 'de'}">
+
+        <h1>Quantenfeldtheorie</h1>
+
+        <p class="subtitle">
+            Einführende Vorlesungsnotizen zur Feldquantisierung,
+            Lagrange-Feldtheorie, relativistischen Feldern,
+            Lorentz-Symmetrien und Erhaltungssätzen.
+        </p>
+
+        <div class="pdf-list">
+
+            <!-- 01 -->
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTIZ 01
+                </span>
+
+                <h2>
+                    Harmonischer Oszillator und Feldquantisierung
+                </h2>
+
+                <p>
+                    Einführende Notizen über den Zusammenhang zwischen
+                    dem quantenmechanischen harmonischen Oszillator,
+                    Erzeugungs- und Vernichtungsoperatoren und den
+                    Grundideen der Feldquantisierung.
+                </p>
+
+                <a class="pdf-link"
+                   href="/notes/quantum-field-theory/01-harmonic-oscillator-and-field-quantization.pdf"
+                   target="_blank">
+                    PDF ANZEIGEN
+                </a>
+
+            </div>
+
+
+            <!-- 02 -->
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTIZ 02
+                </span>
+
+                <h2>
+                    Lagrange-Dichte und Feldgleichungen
+                </h2>
+
+                <p>
+                    Notizen zum Übergang von der Teilchenmechanik
+                    zur Feldtheorie, einschließlich Lagrange-Dichte,
+                    Wirkungsprinzip und Euler–Lagrange-Gleichungen
+                    für klassische Felder.
+                </p>
+
+                <a class="pdf-link"
+                   href="/notes/quantum-field-theory/02-lagrangian-density-and-field-equations.pdf"
+                   target="_blank">
+                    PDF ANZEIGEN
+                </a>
+
+            </div>
+
+
+            <!-- 03 -->
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTIZ 03
+                </span>
+
+                <h2>
+                    Relativistische Skalarfelder
+                </h2>
+
+                <p>
+                    Einführung in relativistische Feldbeschreibungen
+                    und Skalarfelder mit besonderem Schwerpunkt
+                    auf der Struktur relativistischer Feldgleichungen.
+                </p>
+
+                <a class="pdf-link"
+                   href="/notes/quantum-field-theory/03-relativistic-scalar-fields.pdf"
+                   target="_blank">
+                    PDF ANZEIGEN
+                </a>
+
+            </div>
+
+
+            <!-- 04 -->
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTIZ 04
+                </span>
+
+                <h2>
+                    Lorentz-Transformationen und Feldsymmetrien
+                </h2>
+
+                <p>
+                    Notizen zu Lorentz-Transformationen und zur Rolle
+                    von Raumzeit-Symmetrien in relativistischen
+                    Feldtheorien.
+                </p>
+
+                <a class="pdf-link"
+                   href="/notes/quantum-field-theory/04-lorentz-transformations-and-field-symmetries.pdf"
+                   target="_blank">
+                    PDF ANZEIGEN
+                </a>
+
+            </div>
+
+
+            <!-- 05 -->
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTIZ 05
+                </span>
+
+                <h2>
+                    Noether-Theorem und erhaltene Ströme
+                </h2>
+
+                <p>
+                    Notizen zu kontinuierlichen Symmetrien,
+                    dem Noether-Theorem und dem Zusammenhang
+                    zwischen Feldsymmetrien und Erhaltungsströmen.
+                </p>
+
+                <a class="pdf-link"
+                   href="/notes/quantum-field-theory/05-noether-theorem-and-conserved-currents.pdf"
+                   target="_blank">
+                    PDF ANZEIGEN
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

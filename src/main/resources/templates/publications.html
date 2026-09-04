@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:lang="${lang != null ? lang : 'en'}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${lang == 'de'
+        ? 'Publikationen & Preprints - Melih Gümüş'
+        : 'Publications & Preprints - Melih Gümüş'}">
+        Publications & Preprints - Melih Gümüş
+    </title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel:wght@400;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+        }
+
+        body {
+            font-family: 'Cinzel', serif;
+            color: #e0e0e0;
+
+            background-image:
+                    linear-gradient(
+                            rgba(8, 8, 8, 0.62),
+                            rgba(8, 8, 8, 0.72)
+                    ),
+                    url('/images/publications-bg.jpg');
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        /* NAVIGATION */
+
+        nav {
+            width: 100%;
+            padding: 22px 20px;
+            background: rgba(0, 0, 0, 0.88);
+            border-bottom: 1px solid #222;
+            position: relative;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+            list-style: none;
+        }
+
+        nav a {
+            color: #eeeeee;
+            text-decoration: none;
+            font-size: 0.82rem;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #d4af37;
+        }
+
+        /* LANGUAGE SWITCH */
+
+        .lang-switch {
+            position: absolute;
+            top: 22px;
+            right: 35px;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        .lang-switch a {
+            color: #888;
+            margin: 0 5px;
+        }
+
+        .lang-switch a.active {
+            color: #d4af37;
+        }
+
+        .separator {
+            color: #555;
+        }
+
+        /* MAIN CONTAINER */
+
+        .container {
+            max-width: 920px;
+            margin: 55px auto;
+            padding: 0 25px 70px 25px;
+        }
+
+        /* PAGE TITLE */
+
+        .gothic-heading {
+            font-family: 'UnifrakturMaguntia', cursive;
+            font-size: 3.8rem;
+            font-weight: normal;
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        /* SECTION TITLE */
+
+        .section-title {
+            margin-top: 40px;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+            color: #d4af37;
+            font-size: 1.25rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* PUBLICATION CARD */
+
+        .publication-card {
+            margin-bottom: 25px;
+            padding: 22px;
+            background: rgba(20, 20, 20, 0.75);
+            border-left: 3px solid #d4af37;
+            transition: 0.25s;
+        }
+
+        .publication-card:hover {
+            transform: translateX(4px);
+            background: rgba(28, 28, 28, 0.9);
+        }
+
+        .pub-title {
+            color: white;
+            font-size: 1.05rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 9px;
+        }
+
+        .pub-authors {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .pub-journal {
+            color: #d4af37;
+            font-size: 0.85rem;
+            font-style: italic;
+            margin-bottom: 13px;
+        }
+
+        .pub-abstract {
+            font-family: Georgia, serif;
+            color: #ccc;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .pub-link {
+            display: inline-block;
+            padding: 7px 12px;
+            color: white;
+            text-decoration: none;
+            border: 1px solid #444;
+            background: #1a1a1a;
+            font-size: 0.78rem;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .pub-link:hover {
+            background: #d4af37;
+            color: black;
+            border-color: #d4af37;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 900px) {
+
+            nav {
+                padding-top: 55px;
+            }
+
+            .lang-switch {
+                top: 17px;
+                right: 20px;
+            }
+
+            nav ul {
+                gap: 13px;
+            }
+
+            nav a {
+                font-size: 0.68rem;
+            }
+
+            .gothic-heading {
+                font-size: 3rem;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<nav>
+
+    <!-- ENGLISH MENU -->
+
+    <ul th:if="${lang != 'de'}">
+
+        <li>
+            <a th:href="@{/(lang='en')}">[HOME]</a>
+        </li>
+
+        <li>
+            <a th:href="@{/biography(lang='en')}">[BIOGRAPHY]</a>
+        </li>
+
+        <li>
+            <a th:href="@{/essays(lang='en')}">[ESSAYS]</a>
+        </li>
+
+        <li>
+            <a th:href="@{/publications(lang='en')}">[PUBLICATIONS]</a>
+        </li>
+
+        <li>
+            <a th:href="@{/lecture-notes(lang='en')}">[LECTURE NOTES]</a>
+        </li>
+
+        <li>
+            <a th:href="@{/research-group(lang='en')}">[RESEARCH GROUP]</a>
+        </li>
+
+        <li>
+            <a th:href="@{/contact(lang='en')}">[CONTACT]</a>
+        </li>
+
+    </ul>
+
+
+    <!-- GERMAN MENU -->
+
+    <ul th:if="${lang == 'de'}">
+
+        <li>
+            <a th:href="@{/(lang='de')}">[STARTSEITE]</a>
+        </li>
+
+        <li>
+            <a th:href="@{/biography(lang='de')}">[BIOGRAFIE]</a>
+        </li>
+
+        <li>
+            <a th:href="@{/essays(lang='de')}">[ESSAYS]</a>
+        </li>
+
+        <li>
+            <a th:href="@{/publications(lang='de')}">[PUBLIKATIONEN]</a>
+        </li>
+
+        <li>
+            <a th:href="@{/lecture-notes(lang='de')}">[VORLESUNGSSKRIPTE]</a>
+        </li>
+
+        <li>
+            <a th:href="@{/research-group(lang='de')}">[FORSCHUNGSGRUPPE]</a>
+        </li>
+
+        <li>
+            <a th:href="@{/contact(lang='de')}">[KONTAKT]</a>
+        </li>
+
+    </ul>
+
+
+    <!-- LANGUAGE SWITCH -->
+
+    <div class="lang-switch">
+
+        <a th:href="@{/publications(lang='en')}"
+           th:classappend="${lang != 'de'} ? 'active' : ''">
+            EN
+        </a>
+
+        <span class="separator">|</span>
+
+        <a th:href="@{/publications(lang='de')}"
+           th:classappend="${lang == 'de'} ? 'active' : ''">
+            DE
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <h1 class="gothic-heading"
+        th:text="${lang == 'de'
+            ? 'Publikationen & Preprints'
+            : 'Publications & Preprints'}">
+        Publications & Preprints
+    </h1>
+
+
+    <!-- ========================= -->
+    <!-- PUBLISHED JOURNAL ARTICLES -->
+    <!-- ========================= -->
+
+    <div class="section-title"
+         th:text="${lang == 'de'
+            ? 'Veröffentlichte Artikel'
+            : 'Published Journal Articles'}">
+        Published Journal Articles
+    </div>
+
+
+    <div class="publication-card">
+
+        <div class="pub-title">
+            On the Geometric Interpretation of Non-Singular Black Hole Interiors
+        </div>
+
+        <div class="pub-authors">
+            Melih Gümüş, B. B. Öner
+        </div>
+
+        <div class="pub-journal">
+            Modern Physics Letters A (2026) | Article 2650184
+        </div>
+
+        <div class="pub-abstract">
+
+            <span th:if="${lang != 'de'}">
+                This study investigates non-singular black-hole interiors
+                within the framework of teleparallel gravity. It explores
+                the possibility that the central singularity may be replaced
+                by a regular interior geometry with a de Sitter-like core,
+                with particular emphasis on torsion, horizon structure
+                and the equivalence principle.
+            </span>
+
+            <span th:if="${lang == 'de'}">
+                Diese Arbeit untersucht nichtsinguläre Innenräume Schwarzer Löcher
+                im Rahmen der teleparallelen Gravitation. Dabei wird die Möglichkeit
+                untersucht, dass die zentrale Singularität durch eine reguläre
+                innere Geometrie mit einem de-Sitter-ähnlichen Kern ersetzt werden
+                kann. Besonderes Augenmerk liegt auf Torsion, Horizontstruktur
+                und dem Äquivalenzprinzip.
+            </span>
+
+        </div>
+
+        <a href="https://doi.org/10.1142/S021773232650184X"
+           target="_blank"
+           class="pub-link">
+
+            <span th:text="${lang == 'de'
+                ? '[DOI / ARTIKEL]'
+                : '[DOI / ARTICLE]'}">
+                [DOI / ARTICLE]
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- PREPRINTS & MANUSCRIPTS -->
+    <!-- ========================= -->
+
+    <div class="section-title"
+         th:text="${lang == 'de'
+            ? 'Preprints & Manuskripte'
+            : 'Preprints & Manuscripts'}">
+        Preprints & Manuscripts
+    </div>
+
+
+    <!-- PREPRINT -->
+
+    <div class="publication-card">
+
+        <div class="pub-title">
+            On the Nature of Gravitation and Geometric Drift of Spacetime
+        </div>
+
+        <div class="pub-authors">
+            Melih Gümüş, B. B. Öner
+        </div>
+
+        <div class="pub-journal"
+             th:text="${lang == 'de'
+                ? 'Online-Preprint'
+                : 'Online Preprint'}">
+            Online Preprint
+        </div>
+
+        <div class="pub-abstract">
+
+            <span th:if="${lang != 'de'}">
+                This work investigates the fundamental nature of gravitation
+                through geometric drift vectors defined within teleparallel
+                spacetime. The formulation explores the geometric relationship
+                between inertial and gravitational effects through a torsion-based
+                description of spacetime.
+            </span>
+
+            <span th:if="${lang == 'de'}">
+                Diese Arbeit untersucht die fundamentale Natur der Gravitation
+                mithilfe geometrischer Driftvektoren in einer teleparallelen
+                Raumzeit. Der Ansatz untersucht den geometrischen Zusammenhang
+                zwischen Trägheits- und Gravitationseffekten auf Grundlage
+                einer torsionsbasierten Beschreibung der Raumzeit.
+            </span>
+
+        </div>
+
+        <a href="https://www.preprints.org/manuscript/202512.1361"
+           target="_blank"
+           class="pub-link">
+
+            <span th:text="${lang == 'de'
+                ? '[PREPRINT]'
+                : '[PREPRINT]'}">
+                [PREPRINT]
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <!-- MANUSCRIPT -->
+
+    <div class="publication-card">
+
+        <div class="pub-title">
+            On the Geometric Emergence of the Electromagnetic Field
+            in Teleparallel Spacetime
+        </div>
+
+        <div class="pub-authors">
+            Melih Gümüş
+        </div>
+
+        <div class="pub-journal"
+             th:text="${lang == 'de'
+                ? 'Manuskript'
+                : 'Manuscript'}">
+            Manuscript
+        </div>
+
+        <div class="pub-abstract">
+
+            <span th:if="${lang != 'de'}">
+                This work explores a geometric formulation of electromagnetism
+                within teleparallel spacetime. The electromagnetic field is
+                related to temporal tetrad structure and torsion, with the aim
+                of examining whether electromagnetic phenomena may admit
+                a geometric interpretation within the same spacetime framework.
+            </span>
+
+            <span th:if="${lang == 'de'}">
+                Diese Arbeit untersucht eine geometrische Formulierung
+                des Elektromagnetismus in der teleparallelen Raumzeit.
+                Das elektromagnetische Feld wird mit der zeitlichen Tetradenstruktur
+                und der Torsion in Verbindung gebracht, um zu untersuchen,
+                ob elektromagnetische Phänomene innerhalb desselben
+                Raumzeitrahmens geometrisch interpretiert werden können.
+            </span>
+
+        </div>
+
+        <a href="https://www.preprints.org/manuscript/202602.0469"
+           target="_blank"
+           class="pub-link">
+
+            <span th:text="${lang == 'de'
+                ? '[MANUSKRIPT]'
+                : '[MANUSCRIPT]'}">
+                [MANUSCRIPT]
+            </span>
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

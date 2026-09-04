@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:lang="${lang != null ? lang : 'en'}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Melih Gümüş</title>
+
+    <!-- Gothic + Classical Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cinzel:wght@400;500;600&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Cinzel', serif;
+            overflow: hidden;
+            background: #111;
+        }
+
+
+        /* =========================
+           HERO / BACKGROUND
+           ========================= */
+
+        .hero {
+            width: 100%;
+            height: 100vh;
+
+            background-image:
+                    linear-gradient(
+                            rgba(0, 0, 0, 0.34),
+                            rgba(0, 0, 0, 0.34)
+                    ),
+                    url('/images/bern.png');
+
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+
+            position: relative;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        /* =========================
+           NAVIGATION BAR
+           ========================= */
+
+        nav {
+            width: 100%;
+            height: 62px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            position: relative;
+
+            background: rgba(0, 0, 0, 0.70);
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+
+            z-index: 10;
+        }
+
+
+        nav ul {
+            list-style: none;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 27px;
+        }
+
+
+        nav a {
+            color: #e2e2e2;
+
+            text-decoration: none;
+
+            font-size: 0.78rem;
+
+            letter-spacing: 1.8px;
+
+            transition: color 0.25s ease;
+        }
+
+
+        nav a:hover {
+            color: #d4af37;
+        }
+
+
+        /* =========================
+           LANGUAGE SWITCH
+           ========================= */
+
+        .lang-switch {
+            position: absolute;
+
+            right: 34px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            font-size: 0.76rem;
+
+            letter-spacing: 2px;
+        }
+
+
+        .lang-switch a {
+            color: #888;
+        }
+
+
+        .lang-switch a.active {
+            color: #d4af37;
+        }
+
+
+        .separator {
+            color: #555;
+        }
+
+
+        /* =========================
+           CENTER CONTENT
+           ========================= */
+
+        .center-content {
+            position: absolute;
+
+            top: 25%;
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+
+            width: 100%;
+
+            text-align: center;
+
+            color: white;
+        }
+
+
+        /* =========================
+           NAME
+           ========================= */
+
+        .name {
+            font-family: 'UnifrakturMaguntia', cursive;
+
+            font-size: clamp(4rem, 5.5vw, 6.5rem);
+
+            font-weight: normal;
+
+            color: #ffffff;
+
+            line-height: 1;
+
+            text-shadow:
+                    2px 3px 3px rgba(0,0,0,0.65),
+                    0 0 15px rgba(0,0,0,0.4);
+
+            margin-bottom: 26px;
+        }
+
+
+        /* =========================
+           SUBTITLE
+           ========================= */
+
+        .subtitle {
+            font-family: 'Cinzel', serif;
+
+            font-size: clamp(0.75rem, 1vw, 1.05rem);
+
+            font-weight: 600;
+
+            letter-spacing: 6px;
+
+            color: #ffffff;
+
+            text-shadow:
+                    2px 2px 5px rgba(0,0,0,0.85);
+        }
+
+
+        /* =========================
+           MOBILE
+           ========================= */
+
+        @media (max-width: 1100px) {
+
+            nav ul {
+                gap: 16px;
+            }
+
+            nav a {
+                font-size: 0.68rem;
+            }
+
+        }
+
+
+        @media (max-width: 850px) {
+
+            nav {
+                height: auto;
+                min-height: 90px;
+                padding: 15px 70px 15px 15px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                gap: 10px 15px;
+            }
+
+            .lang-switch {
+                right: 15px;
+                top: 18px;
+                transform: none;
+            }
+
+            .center-content {
+                top: 32%;
+                padding: 0 20px;
+            }
+
+            .name {
+                font-size: 4rem;
+            }
+
+            .subtitle {
+                font-size: 0.7rem;
+                letter-spacing: 3px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+
+<div class="hero">
+
+
+    <!-- =========================
+         NAVIGATION
+         ========================= -->
+
+    <nav>
+
+
+        <!-- ENGLISH MENU -->
+
+        <ul th:if="${lang != 'de'}">
+
+            <li>
+                <a th:href="@{/biography(lang='en')}">
+                    [BIOGRAPHY]
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/essays(lang='en')}">
+                    [ESSAYS]
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/publications(lang='en')}">
+                    [PUBLICATIONS]
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/lecture-notes(lang='en')}">
+                    [LECTURE NOTES]
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/research-group(lang='en')}">
+                    [RESEARCH GROUP]
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/contact(lang='en')}">
+                    [CONTACT]
+                </a>
+            </li>
+
+        </ul>
+
+
+
+        <!-- GERMAN MENU -->
+
+        <ul th:if="${lang == 'de'}">
+
+            <li>
+                <a th:href="@{/biography(lang='de')}">
+                    [BIOGRAFIE]
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/essays(lang='de')}">
+                    [ESSAYS]
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/publications(lang='de')}">
+                    [PUBLIKATIONEN]
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/lecture-notes(lang='de')}">
+                    [VORLESUNGSSKRIPTE]
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/research-group(lang='de')}">
+                    [FORSCHUNGSGRUPPE]
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/contact(lang='de')}">
+                    [KONTAKT]
+                </a>
+            </li>
+
+        </ul>
+
+
+
+        <!-- LANGUAGE -->
+
+        <div class="lang-switch">
+
+            <a th:href="@{/(lang='en')}"
+               th:classappend="${lang != 'de'} ? 'active' : ''">
+                EN
+            </a>
+
+            <span class="separator">|</span>
+
+            <a th:href="@{/(lang='de')}"
+               th:classappend="${lang == 'de'} ? 'active' : ''">
+                DE
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================
+         CENTER TEXT
+         ========================= -->
+
+    <div class="center-content">
+
+        <h1 class="name">
+            Melih Gümüş
+        </h1>
+
+        <div class="subtitle">
+            DER GLÜCKLICHSTE GEDANKE MEINES LEBENS
+        </div>
+
+    </div>
+
+
+</div>
+
+
+</body>
+</html>

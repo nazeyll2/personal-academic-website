@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:lang="${lang != null ? lang : 'en'}">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${lang == 'de'
+        ? 'Quantenmechanik I - Melih Gümüş'
+        : 'Quantum Mechanics I - Melih Gümüş'}">
+
+        Quantum Mechanics I - Melih Gümüş
+
+    </title>
+
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            min-height: 100%;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            background: #111111;
+
+            color: #eeeeee;
+
+            font-family: Georgia, serif;
+
+        }
+
+
+
+        /* =========================
+           NAVIGATION
+           ========================= */
+
+
+        nav {
+
+            width: 100%;
+
+            height: 62px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            position: relative;
+
+            background: rgba(0, 0, 0, 0.85);
+
+            border-bottom:
+                    1px solid rgba(255,255,255,0.08);
+
+        }
+
+
+        .back-link {
+
+            font-family: 'Cinzel', serif;
+
+            color: #e5e5e5;
+
+            text-decoration: none;
+
+            font-size: 0.78rem;
+
+            letter-spacing: 2px;
+
+            transition: color 0.25s ease;
+
+        }
+
+
+        .back-link:hover {
+
+            color: #d4af37;
+
+        }
+
+
+
+        /* =========================
+           LANGUAGE
+           ========================= */
+
+
+        .lang-switch {
+
+            position: absolute;
+
+            right: 35px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            font-family: 'Cinzel', serif;
+
+            font-size: 0.76rem;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        .lang-switch a {
+
+            color: #888888;
+
+            text-decoration: none;
+
+            margin: 0 5px;
+
+        }
+
+
+        .lang-switch a.active {
+
+            color: #d4af37;
+
+        }
+
+
+        .separator {
+
+            color: #555555;
+
+        }
+
+
+
+        /* =========================
+           CONTAINER
+           ========================= */
+
+
+        .container {
+
+            max-width: 950px;
+
+            margin: 70px auto;
+
+            padding: 0 25px 80px;
+
+        }
+
+
+        h1 {
+
+            text-align: center;
+
+            font-family: 'Cinzel', serif;
+
+            font-weight: 500;
+
+            letter-spacing: 3px;
+
+            color: #ffffff;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .subtitle {
+
+            max-width: 700px;
+
+            margin: 0 auto 45px;
+
+            text-align: center;
+
+            color: #aaaaaa;
+
+            line-height: 1.7;
+
+        }
+
+
+
+        /* =========================
+           PDF LIST
+           ========================= */
+
+
+        .pdf-list {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 18px;
+
+        }
+
+
+        .pdf-item {
+
+            padding: 24px;
+
+            background:
+                    rgba(20,20,20,0.88);
+
+            border-left:
+                    3px solid #d4af37;
+
+            transition: 0.25s ease;
+
+        }
+
+
+        .pdf-item:hover {
+
+            transform: translateX(4px);
+
+            background:
+                    rgba(29,29,29,0.96);
+
+        }
+
+
+        .pdf-number {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-family: 'Cinzel', serif;
+
+            color: #d4af37;
+
+            font-size: 0.72rem;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        .pdf-item h2 {
+
+            font-family: 'Cinzel', serif;
+
+            font-size: 1rem;
+
+            font-weight: 500;
+
+            color: #ffffff;
+
+            line-height: 1.5;
+
+            margin-bottom: 9px;
+
+        }
+
+
+        .pdf-description {
+
+            color: #aaaaaa;
+
+            font-size: 0.94rem;
+
+            line-height: 1.65;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .pdf-link {
+
+            display: inline-block;
+
+            padding: 8px 13px;
+
+            border: 1px solid #444444;
+
+            background: #191919;
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-family: 'Cinzel', serif;
+
+            font-size: 0.76rem;
+
+            letter-spacing: 1px;
+
+            transition: 0.3s;
+
+        }
+
+
+        .pdf-link:hover {
+
+            background: #d4af37;
+
+            border-color: #d4af37;
+
+            color: #111111;
+
+        }
+
+
+
+        /* =========================
+           MOBILE
+           ========================= */
+
+
+        @media (max-width: 750px) {
+
+            nav {
+
+                justify-content: flex-start;
+
+                padding-left: 20px;
+
+            }
+
+
+            .lang-switch {
+
+                right: 20px;
+
+            }
+
+
+            .container {
+
+                margin: 45px auto;
+
+                padding:
+                        0 18px 60px;
+
+            }
+
+
+            h1 {
+
+                font-size: 1.7rem;
+
+            }
+
+
+            .pdf-item {
+
+                padding: 20px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+
+<!-- =========================
+     NAVIGATION
+     ========================= -->
+
+
+<nav>
+
+
+    <a th:if="${lang != 'de'}"
+       th:href="@{/lecture-notes(lang='en')}"
+       class="back-link">
+
+        ← [LECTURE NOTES]
+
+    </a>
+
+
+    <a th:if="${lang == 'de'}"
+       th:href="@{/lecture-notes(lang='de')}"
+       class="back-link">
+
+        ← [VORLESUNGSSKRIPTE]
+
+    </a>
+
+
+
+    <div class="lang-switch">
+
+
+        <a th:href="@{/lecture-notes/quantum-mechanics-1(lang='en')}"
+           th:classappend="${lang != 'de'} ? 'active' : ''">
+
+            EN
+
+        </a>
+
+
+        <span class="separator">
+            |
+        </span>
+
+
+        <a th:href="@{/lecture-notes/quantum-mechanics-1(lang='de')}"
+           th:classappend="${lang == 'de'} ? 'active' : ''">
+
+            DE
+
+        </a>
+
+
+    </div>
+
+
+</nav>
+
+
+
+<!-- =========================
+     MAIN CONTENT
+     ========================= -->
+
+
+<div class="container">
+
+
+
+    <!-- ==================================
+         ENGLISH
+         ================================== -->
+
+
+    <div th:if="${lang != 'de'}">
+
+
+        <h1>
+            Quantum Mechanics I
+        </h1>
+
+
+        <p class="subtitle">
+
+            Selected handwritten notes covering fundamental
+            concepts, mathematical methods and standard
+            one-dimensional problems in quantum mechanics.
+
+        </p>
+
+
+
+        <div class="pdf-list">
+
+
+
+            <!-- 01 -->
+
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTE 01
+                </span>
+
+
+                <h2>
+                    Wave Packets and Fourier Transform
+                </h2>
+
+
+                <p class="pdf-description">
+
+                    Introduction to wave packets and Fourier
+                    decomposition, with emphasis on Gaussian
+                    wave packets, momentum components and
+                    the connection to the Schrödinger equation.
+
+                </p>
+
+
+                <a class="pdf-link"
+
+                   href="/notes/quantum-mechanics-1/01-wave-packets-and-fourier-transform.pdf"
+
+                   target="_blank">
+
+                    VIEW PDF
+
+                </a>
+
+            </div>
+
+
+
+            <!-- 02 -->
+
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTE 02
+                </span>
+
+
+                <h2>
+                    Schrödinger Equation and Probability Current
+                </h2>
+
+
+                <p class="pdf-description">
+
+                    Notes on the Schrödinger equation,
+                    probability density and probability current,
+                    together with the momentum-space
+                    representation and Fourier transformation.
+
+                </p>
+
+
+                <a class="pdf-link"
+
+                   href="/notes/quantum-mechanics-1/02-schrodinger-equation-and-probability-current.pdf"
+
+                   target="_blank">
+
+                    VIEW PDF
+
+                </a>
+
+            </div>
+
+
+
+            <!-- 03 -->
+
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTE 03
+                </span>
+
+
+                <h2>
+                    Operators and the Infinite Square Well
+                </h2>
+
+
+                <p class="pdf-description">
+
+                    Introduction to quantum operators and
+                    stationary states, followed by the
+                    one-dimensional infinite square-well
+                    problem, normalization and quantized
+                    energy levels.
+
+                </p>
+
+
+                <a class="pdf-link"
+
+                   href="/notes/quantum-mechanics-1/03-operators-and-infinite-square-well.pdf"
+
+                   target="_blank">
+
+                    VIEW PDF
+
+                </a>
+
+            </div>
+
+
+
+            <!-- 04 -->
+
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTE 04
+                </span>
+
+
+                <h2>
+                    Potential Step and Potential Well
+                </h2>
+
+
+                <p class="pdf-description">
+
+                    Scattering and bound-state calculations
+                    for piecewise potentials, including
+                    reflection and transmission amplitudes
+                    at potential boundaries.
+
+                </p>
+
+
+                <a class="pdf-link"
+
+                   href="/notes/quantum-mechanics-1/04-potential-step-and-potential-well.pdf"
+
+                   target="_blank">
+
+                    VIEW PDF
+
+                </a>
+
+            </div>
+
+
+
+            <!-- 05 -->
+
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTE 05
+                </span>
+
+
+                <h2>
+                    Quantum Tunneling and Potential Barrier
+                </h2>
+
+
+                <p class="pdf-description">
+
+                    Analysis of transmission and reflection
+                    through a finite potential barrier,
+                    illustrating the quantum-mechanical
+                    tunneling phenomenon.
+
+                </p>
+
+
+                <a class="pdf-link"
+
+                   href="/notes/quantum-mechanics-1/05-quantum-tunneling-and-potential-barrier.pdf"
+
+                   target="_blank">
+
+                    VIEW PDF
+
+                </a>
+
+            </div>
+
+
+
+            <!-- 06 -->
+
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTE 06
+                </span>
+
+
+                <h2>
+                    Finite Wells, Delta Potential and Kronig–Penney Model
+                </h2>
+
+
+                <p class="pdf-description">
+
+                    Further one-dimensional quantum systems,
+                    including finite wells, delta-function
+                    potentials and the periodic
+                    Kronig–Penney model.
+
+                </p>
+
+
+                <a class="pdf-link"
+
+                   href="/notes/quantum-mechanics-1/06-finite-wells-delta-potential-and-kronig-penney.pdf"
+
+                   target="_blank">
+
+                    VIEW PDF
+
+                </a>
+
+            </div>
+
+
+
+            <!-- 07 -->
+
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTE 07
+                </span>
+
+
+                <h2>
+                    Operators, Commutators and Uncertainty
+                </h2>
+
+
+                <p class="pdf-description">
+
+                    Notes on quantum states, Dirac notation,
+                    Hermitian operators, expectation values,
+                    commutators, uncertainty relations
+                    and time evolution of observables.
+
+                </p>
+
+
+                <a class="pdf-link"
+
+                   href="/notes/quantum-mechanics-1/07-operators-commutators-and-uncertainty.pdf"
+
+                   target="_blank">
+
+                    VIEW PDF
+
+                </a>
+
+            </div>
+
+
+
+            <!-- 08 -->
+
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTE 08
+                </span>
+
+
+                <h2>
+                    Quantum Harmonic Oscillator
+                </h2>
+
+
+                <p class="pdf-description">
+
+                    Algebraic treatment of the quantum
+                    harmonic oscillator using creation
+                    and annihilation operators, energy
+                    eigenstates and their time evolution.
+
+                </p>
+
+
+                <a class="pdf-link"
+
+                   href="/notes/quantum-mechanics-1/08-quantum-harmonic-oscillator.pdf"
+
+                   target="_blank">
+
+                    VIEW PDF
+
+                </a>
+
+            </div>
+
+
+
+            <!-- 09 -->
+
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTE 09
+                </span>
+
+
+                <h2>
+                    Three-Dimensional Box and Density of States
+                </h2>
+
+
+                <p class="pdf-description">
+
+                    Extension of the infinite-well problem
+                    to three dimensions, including separated
+                    wave functions, quantized energies,
+                    state counting and density-of-states
+                    calculations.
+
+                </p>
+
+
+                <a class="pdf-link"
+
+                   href="/notes/quantum-mechanics-1/09-three-dimensional-box-and-density-of-states.pdf"
+
+                   target="_blank">
+
+                    VIEW PDF
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+    <!-- ==================================
+         GERMAN
+         ================================== -->
+
+
+    <div th:if="${lang == 'de'}">
+
+
+        <h1>
+            Quantenmechanik I
+        </h1>
+
+
+        <p class="subtitle">
+
+            Ausgewählte handschriftliche Notizen zu grundlegenden
+            Konzepten, mathematischen Methoden und klassischen
+            eindimensionalen Problemen der Quantenmechanik.
+
+        </p>
+
+
+
+        <div class="pdf-list">
+
+
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTIZ 01
+                </span>
+
+                <h2>
+                    Wellenpakete und Fourier-Transformation
+                </h2>
+
+                <p class="pdf-description">
+
+                    Einführung in Wellenpakete und
+                    Fourier-Zerlegung mit Schwerpunkt auf
+                    Gaußschen Wellenpaketen, Impulskomponenten
+                    und ihrer Verbindung zur Schrödinger-Gleichung.
+
+                </p>
+
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-1/01-wave-packets-and-fourier-transform.pdf"
+                   target="_blank">
+
+                    PDF ANZEIGEN
+
+                </a>
+
+            </div>
+
+
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTIZ 02
+                </span>
+
+                <h2>
+                    Schrödinger-Gleichung und Wahrscheinlichkeitsstrom
+                </h2>
+
+                <p class="pdf-description">
+
+                    Notizen zur Schrödinger-Gleichung,
+                    Wahrscheinlichkeitsdichte und zum
+                    Wahrscheinlichkeitsstrom sowie zur
+                    Impulsraumdarstellung.
+
+                </p>
+
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-1/02-schrodinger-equation-and-probability-current.pdf"
+                   target="_blank">
+
+                    PDF ANZEIGEN
+
+                </a>
+
+            </div>
+
+
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTIZ 03
+                </span>
+
+                <h2>
+                    Operatoren und der unendliche Potentialtopf
+                </h2>
+
+                <p class="pdf-description">
+
+                    Einführung in Operatoren und stationäre
+                    Zustände sowie Lösung des eindimensionalen
+                    unendlichen Potentialtopfs und seiner
+                    quantisierten Energieniveaus.
+
+                </p>
+
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-1/03-operators-and-infinite-square-well.pdf"
+                   target="_blank">
+
+                    PDF ANZEIGEN
+
+                </a>
+
+            </div>
+
+
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTIZ 04
+                </span>
+
+                <h2>
+                    Potentialstufe und Potentialtopf
+                </h2>
+
+                <p class="pdf-description">
+
+                    Streu- und gebundene Zustände in
+                    stückweise definierten Potentialen
+                    einschließlich Reflexions- und
+                    Transmissionskoeffizienten.
+
+                </p>
+
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-1/04-potential-step-and-potential-well.pdf"
+                   target="_blank">
+
+                    PDF ANZEIGEN
+
+                </a>
+
+            </div>
+
+
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTIZ 05
+                </span>
+
+                <h2>
+                    Quantentunneln und Potentialbarriere
+                </h2>
+
+                <p class="pdf-description">
+
+                    Untersuchung der Transmission und
+                    Reflexion an einer endlichen Potentialbarriere
+                    und des quantenmechanischen Tunneleffekts.
+
+                </p>
+
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-1/05-quantum-tunneling-and-potential-barrier.pdf"
+                   target="_blank">
+
+                    PDF ANZEIGEN
+
+                </a>
+
+            </div>
+
+
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTIZ 06
+                </span>
+
+                <h2>
+                    Endliche Potentialtöpfe, Delta-Potential und Kronig–Penney-Modell
+                </h2>
+
+                <p class="pdf-description">
+
+                    Weitere eindimensionale Quantensysteme,
+                    darunter endliche Potentialtöpfe,
+                    Delta-Potentiale und das periodische
+                    Kronig–Penney-Modell.
+
+                </p>
+
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-1/06-finite-wells-delta-potential-and-kronig-penney.pdf"
+                   target="_blank">
+
+                    PDF ANZEIGEN
+
+                </a>
+
+            </div>
+
+
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTIZ 07
+                </span>
+
+                <h2>
+                    Operatoren, Kommutatoren und Unschärfe
+                </h2>
+
+                <p class="pdf-description">
+
+                    Notizen zu Quantenzuständen,
+                    Dirac-Notation, hermiteschen Operatoren,
+                    Erwartungswerten, Kommutatoren,
+                    Unschärferelationen und Zeitentwicklung.
+
+                </p>
+
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-1/07-operators-commutators-and-uncertainty.pdf"
+                   target="_blank">
+
+                    PDF ANZEIGEN
+
+                </a>
+
+            </div>
+
+
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTIZ 08
+                </span>
+
+                <h2>
+                    Quantenharmonischer Oszillator
+                </h2>
+
+                <p class="pdf-description">
+
+                    Algebraische Behandlung des harmonischen
+                    Oszillators mit Erzeugungs- und
+                    Vernichtungsoperatoren, Energiezuständen
+                    und deren Zeitentwicklung.
+
+                </p>
+
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-1/08-quantum-harmonic-oscillator.pdf"
+                   target="_blank">
+
+                    PDF ANZEIGEN
+
+                </a>
+
+            </div>
+
+
+
+            <div class="pdf-item">
+
+                <span class="pdf-number">
+                    NOTIZ 09
+                </span>
+
+                <h2>
+                    Dreidimensionaler Potentialtopf und Zustandsdichte
+                </h2>
+
+                <p class="pdf-description">
+
+                    Erweiterung des unendlichen Potentialtopfs
+                    auf drei Dimensionen mit separierten
+                    Wellenfunktionen, quantisierten Energien,
+                    Zustandszählung und Zustandsdichte.
+
+                </p>
+
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-1/09-three-dimensional-box-and-density-of-states.pdf"
+                   target="_blank">
+
+                    PDF ANZEIGEN
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

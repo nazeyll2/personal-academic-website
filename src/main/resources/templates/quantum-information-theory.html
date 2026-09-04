@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:lang="${lang != null ? lang : 'en'}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title th:text="${lang == 'de'
+        ? 'Quanteninformationstheorie - Melih Gümüş'
+        : 'Quantum Information Theory - Melih Gümüş'}">
+    Quantum Information Theory - Melih Gümüş
+  </title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #111;
+      color: #eee;
+      font-family: Georgia, serif;
+    }
+
+    nav {
+      height: 62px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      background: rgba(0,0,0,0.85);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .back-link {
+      color: #eee;
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+    }
+
+    .back-link:hover {
+      color: #d4af37;
+    }
+
+    .lang-switch {
+      position: absolute;
+      right: 35px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Cinzel', serif;
+      font-size: 0.76rem;
+      letter-spacing: 2px;
+    }
+
+    .lang-switch a {
+      color: #888;
+      text-decoration: none;
+      margin: 0 5px;
+    }
+
+    .lang-switch a.active {
+      color: #d4af37;
+    }
+
+    .separator {
+      color: #555;
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 70px auto;
+      padding: 0 25px 80px;
+    }
+
+    h1 {
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-weight: 500;
+      letter-spacing: 3px;
+      margin-bottom: 15px;
+    }
+
+    .subtitle {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 45px;
+      color: #aaa;
+      line-height: 1.7;
+    }
+
+    .pdf-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .pdf-item {
+      padding: 24px;
+      background: rgba(20,20,20,0.88);
+      border-left: 3px solid #d4af37;
+      transition: 0.25s;
+    }
+
+    .pdf-item:hover {
+      transform: translateX(4px);
+      background: rgba(30,30,30,0.96);
+    }
+
+    .pdf-number {
+      display: block;
+      margin-bottom: 8px;
+      color: #d4af37;
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+    }
+
+    .pdf-item h2 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .pdf-item p {
+      color: #aaa;
+      font-size: 0.94rem;
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .pdf-link {
+      display: inline-block;
+      padding: 8px 13px;
+      border: 1px solid #444;
+      background: #191919;
+      color: white;
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      font-size: 0.76rem;
+      letter-spacing: 1px;
+    }
+
+    .pdf-link:hover {
+      background: #d4af37;
+      color: #111;
+    }
+  </style>
+</head>
+
+<body>
+
+<nav>
+
+  <a th:if="${lang != 'de'}"
+     th:href="@{/lecture-notes(lang='en')}"
+     class="back-link">
+    ← [LECTURE NOTES]
+  </a>
+
+  <a th:if="${lang == 'de'}"
+     th:href="@{/lecture-notes(lang='de')}"
+     class="back-link">
+    ← [VORLESUNGSSKRIPTE]
+  </a>
+
+  <div class="lang-switch">
+
+    <a th:href="@{/lecture-notes/quantum-information-theory(lang='en')}"
+       th:classappend="${lang != 'de'} ? 'active' : ''">
+      EN
+    </a>
+
+    <span class="separator">|</span>
+
+    <a th:href="@{/lecture-notes/quantum-information-theory(lang='de')}"
+       th:classappend="${lang == 'de'} ? 'active' : ''">
+      DE
+    </a>
+
+  </div>
+
+</nav>
+
+<div class="container">
+
+  <!-- ENGLISH -->
+  <div th:if="${lang != 'de'}">
+
+    <h1>Quantum Information Theory</h1>
+
+    <p class="subtitle">
+      Lecture notes on qubits, spin systems, angular-momentum coupling,
+      entanglement, the EPR paradox, Bell inequalities and selected
+      applications in quantum information.
+    </p>
+
+    <div class="pdf-list">
+
+      <div class="pdf-item">
+        <span class="pdf-number">01</span>
+        <h2>Quantum Information Overview</h2>
+        <p>
+          A broad set of notes introducing quantum information through
+          spin-1/2 systems, qubits and the Stern–Gerlach experiment.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/01-quantum-information-overview.pdf"
+           target="_blank">VIEW PDF</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">02</span>
+        <h2>Qubits, Spin and Stern–Gerlach</h2>
+        <p>
+          Notes on spin states, spinor representations and measurements
+          along different spatial directions using the Stern–Gerlach setup.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/02-qubits-spin-and-stern-gerlach.pdf"
+           target="_blank">VIEW PDF</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">03</span>
+        <h2>Spin States and Angular Momentum</h2>
+        <p>
+          Further calculations with spin states and angular-momentum
+          operators, including basis transformations and eigenstates.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/03-spin-states-and-angular-momentum.pdf"
+           target="_blank">VIEW PDF</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">04</span>
+        <h2>Angular-Momentum Coupling</h2>
+        <p>
+          Introduction to combining angular momenta and constructing
+          coupled quantum states from individual spin systems.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/04-angular-momentum-coupling.pdf"
+           target="_blank">VIEW PDF</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">05</span>
+        <h2>Addition of Angular Momentum</h2>
+        <p>
+          Detailed notes on total angular momentum, allowed quantum
+          numbers and the structure of coupled states.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/05-addition-of-angular-momentum.pdf"
+           target="_blank">VIEW PDF</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">06</span>
+        <h2>Clebsch–Gordan Coefficients — Part I</h2>
+        <p>
+          Calculations involving Clebsch–Gordan coefficients and the
+          decomposition of coupled angular-momentum states.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/06-clebsch-gordan-coefficients-part-1.pdf"
+           target="_blank">VIEW PDF</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">07</span>
+        <h2>Clebsch–Gordan Coefficients and Bell States</h2>
+        <p>
+          Continuation of angular-momentum coupling with applications
+          to two-particle systems and Bell-type quantum states.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/07-clebsch-gordan-and-bell-states.pdf"
+           target="_blank">VIEW PDF</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">08</span>
+        <h2>Singlet, Triplet and Entangled States</h2>
+        <p>
+          Notes on singlet and triplet configurations and the emergence
+          of entangled states in two-spin systems.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/08-singlet-triplet-and-entangled-states.pdf"
+           target="_blank">VIEW PDF</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">09</span>
+        <h2>EPR Paradox and Quantum Entanglement</h2>
+        <p>
+          Discussion of the Einstein–Podolsky–Rosen paradox,
+          non-classical correlations and entangled quantum states.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/09-epr-paradox-and-quantum-entanglement.pdf"
+           target="_blank">VIEW PDF</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">10</span>
+        <h2>Bell Inequalities and Correlations</h2>
+        <p>
+          Notes on Bell-type experiments, measurement correlations
+          and the distinction between classical and quantum predictions.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/10-bell-inequalities-and-correlations.pdf"
+           target="_blank">VIEW PDF</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">11</span>
+        <h2>Quantum Information Problems and Applications</h2>
+        <p>
+          Selected applications and exercises involving quantum
+          communication, superdense coding, binary strings,
+          probability and interferometric ideas.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/11-quantum-information-problems-and-applications.pdf"
+           target="_blank">VIEW PDF</a>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- GERMAN -->
+  <div th:if="${lang == 'de'}">
+
+    <h1>Quanteninformationstheorie</h1>
+
+    <p class="subtitle">
+      Vorlesungsnotizen zu Qubits, Spinsystemen, Drehimpulskopplung,
+      Verschränkung, dem EPR-Paradoxon, Bell-Ungleichungen und
+      ausgewählten Anwendungen der Quanteninformation.
+    </p>
+
+    <div class="pdf-list">
+
+      <div class="pdf-item">
+        <span class="pdf-number">01</span>
+        <h2>Überblick über Quanteninformation</h2>
+        <p>
+          Einführende Notizen zu Qubits, Spin-1/2-Systemen
+          und dem Stern–Gerlach-Experiment.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/01-quantum-information-overview.pdf"
+           target="_blank">PDF ANZEIGEN</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">02</span>
+        <h2>Qubits, Spin und Stern–Gerlach</h2>
+        <p>
+          Notizen zu Spinzuständen, Spinoren und Messungen
+          entlang verschiedener Raumrichtungen.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/02-qubits-spin-and-stern-gerlach.pdf"
+           target="_blank">PDF ANZEIGEN</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">03</span>
+        <h2>Spinzustände und Drehimpuls</h2>
+        <p>
+          Weitere Berechnungen mit Spinzuständen,
+          Drehimpulsoperatoren und Eigenzuständen.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/03-spin-states-and-angular-momentum.pdf"
+           target="_blank">PDF ANZEIGEN</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">04</span>
+        <h2>Drehimpulskopplung</h2>
+        <p>
+          Einführung in die Kopplung von Drehimpulsen
+          und die Konstruktion gekoppelter Quantenzustände.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/04-angular-momentum-coupling.pdf"
+           target="_blank">PDF ANZEIGEN</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">05</span>
+        <h2>Addition von Drehimpulsen</h2>
+        <p>
+          Notizen zum Gesamtdrehimpuls, zu erlaubten Quantenzahlen
+          und zur Struktur gekoppelter Zustände.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/05-addition-of-angular-momentum.pdf"
+           target="_blank">PDF ANZEIGEN</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">06</span>
+        <h2>Clebsch–Gordan-Koeffizienten — Teil I</h2>
+        <p>
+          Berechnungen zu Clebsch–Gordan-Koeffizienten
+          und gekoppelten Drehimpulszuständen.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/06-clebsch-gordan-coefficients-part-1.pdf"
+           target="_blank">PDF ANZEIGEN</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">07</span>
+        <h2>Clebsch–Gordan-Koeffizienten und Bell-Zustände</h2>
+        <p>
+          Fortsetzung der Drehimpulskopplung mit Anwendungen
+          auf Zweiteilchensysteme und Bell-Zustände.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/07-clebsch-gordan-and-bell-states.pdf"
+           target="_blank">PDF ANZEIGEN</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">08</span>
+        <h2>Singulett-, Triplett- und verschränkte Zustände</h2>
+        <p>
+          Notizen zu Singulett- und Triplettzuständen
+          sowie zu Verschränkung in Zwei-Spin-Systemen.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/08-singlet-triplet-and-entangled-states.pdf"
+           target="_blank">PDF ANZEIGEN</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">09</span>
+        <h2>EPR-Paradoxon und Quantenverschränkung</h2>
+        <p>
+          Diskussion des Einstein–Podolsky–Rosen-Paradoxons,
+          nichtklassischer Korrelationen und verschränkter Zustände.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/09-epr-paradox-and-quantum-entanglement.pdf"
+           target="_blank">PDF ANZEIGEN</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">10</span>
+        <h2>Bell-Ungleichungen und Korrelationen</h2>
+        <p>
+          Notizen zu Bell-Experimenten, Messkorrelationen
+          und klassischen sowie quantenmechanischen Vorhersagen.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/10-bell-inequalities-and-correlations.pdf"
+           target="_blank">PDF ANZEIGEN</a>
+      </div>
+
+      <div class="pdf-item">
+        <span class="pdf-number">11</span>
+        <h2>Probleme und Anwendungen der Quanteninformation</h2>
+        <p>
+          Ausgewählte Anwendungen und Übungen zu Quantenkommunikation,
+          Superdense Coding, Binärfolgen, Wahrscheinlichkeit
+          und interferometrischen Konzepten.
+        </p>
+        <a class="pdf-link"
+           href="/notes/quantum-information-theory/11-quantum-information-problems-and-applications.pdf"
+           target="_blank">PDF ANZEIGEN</a>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

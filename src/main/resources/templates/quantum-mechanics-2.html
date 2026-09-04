@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:lang="${lang != null ? lang : 'en'}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${lang == 'de'
+        ? 'Quantenmechanik II - Melih Gümüş'
+        : 'Quantum Mechanics II - Melih Gümüş'}">
+        Quantum Mechanics II - Melih Gümüş
+    </title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #111;
+            color: #eee;
+            font-family: Georgia, serif;
+        }
+
+        nav {
+            height: 62px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background: rgba(0,0,0,0.85);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .back-link {
+            color: #eee;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.78rem;
+            letter-spacing: 2px;
+        }
+
+        .back-link:hover {
+            color: #d4af37;
+        }
+
+        .lang-switch {
+            position: absolute;
+            right: 35px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: 'Cinzel', serif;
+            font-size: 0.76rem;
+            letter-spacing: 2px;
+        }
+
+        .lang-switch a {
+            color: #888;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .lang-switch a.active {
+            color: #d4af37;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 70px auto;
+            padding: 0 25px 80px;
+        }
+
+        h1 {
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            font-weight: 500;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 45px;
+            color: #aaa;
+            line-height: 1.7;
+        }
+
+        .pdf-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .pdf-item {
+            padding: 24px;
+            background: rgba(20,20,20,0.88);
+            border-left: 3px solid #d4af37;
+            transition: 0.25s;
+        }
+
+        .pdf-item:hover {
+            transform: translateX(4px);
+            background: rgba(30,30,30,0.96);
+        }
+
+        .pdf-number {
+            display: block;
+            margin-bottom: 8px;
+            color: #d4af37;
+            font-family: 'Cinzel', serif;
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+        }
+
+        .pdf-item h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 9px;
+        }
+
+        .pdf-link {
+            display: inline-block;
+            padding: 8px 13px;
+            border: 1px solid #444;
+            background: #191919;
+            color: white;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.76rem;
+            letter-spacing: 1px;
+        }
+
+        .pdf-link:hover {
+            background: #d4af37;
+            color: #111;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<nav>
+
+    <a th:if="${lang != 'de'}"
+       th:href="@{/lecture-notes(lang='en')}"
+       class="back-link">
+        ← [LECTURE NOTES]
+    </a>
+
+    <a th:if="${lang == 'de'}"
+       th:href="@{/lecture-notes(lang='de')}"
+       class="back-link">
+        ← [VORLESUNGSSKRIPTE]
+    </a>
+
+    <div class="lang-switch">
+
+        <a th:href="@{/lecture-notes/quantum-mechanics-2(lang='en')}"
+           th:classappend="${lang != 'de'} ? 'active' : ''">
+            EN
+        </a>
+
+        |
+
+        <a th:href="@{/lecture-notes/quantum-mechanics-2(lang='de')}"
+           th:classappend="${lang == 'de'} ? 'active' : ''">
+            DE
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <!-- ENGLISH -->
+
+    <div th:if="${lang != 'de'}">
+
+        <h1>Quantum Mechanics II</h1>
+
+        <p class="subtitle">
+            Lecture notes, revisions and problem sets covering
+            advanced topics in quantum mechanics.
+        </p>
+
+        <div class="pdf-list">
+
+            <div class="pdf-item">
+                <span class="pdf-number">01</span>
+                <h2>Perturbation Theory</h2>
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-2/01-perturbation-theory.pdf"
+                   target="_blank">VIEW PDF</a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">02</span>
+                <h2>Degenerate Perturbation Theory</h2>
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-2/02-degenerate-perturbation-theory.pdf"
+                   target="_blank">VIEW PDF</a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">03</span>
+                <h2>Chapter 12 — Part I</h2>
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-2/03-chapter-12-part-1.pdf"
+                   target="_blank">VIEW PDF</a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">04</span>
+                <h2>Chapter 12 — Part II</h2>
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-2/04-chapter-12-part-2.pdf"
+                   target="_blank">VIEW PDF</a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">05</span>
+                <h2>Time-Dependent Perturbation Theory</h2>
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-2/05-time-dependent-perturbation-theory.pdf"
+                   target="_blank">VIEW PDF</a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">06</span>
+                <h2>Chapter 13 — Part I</h2>
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-2/06-chapter-13-part-1.pdf"
+                   target="_blank">VIEW PDF</a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">07</span>
+                <h2>Flux Quantization</h2>
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-2/07-flux-quantization.pdf"
+                   target="_blank">VIEW PDF</a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">08</span>
+                <h2>Laguerre Polynomials</h2>
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-2/08-laguerre-polynomials.pdf"
+                   target="_blank">VIEW PDF</a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">09</span>
+                <h2>Chapter 15</h2>
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-2/09-chapter-15.pdf"
+                   target="_blank">VIEW PDF</a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">10</span>
+                <h2>Quantum Mechanics II — Revision A</h2>
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-2/10-quantum-mechanics-ii-revision-a.pdf"
+                   target="_blank">VIEW PDF</a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">11</span>
+                <h2>Helium, Variational Method and Perturbation Revision</h2>
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-2/11-helium-variational-and-perturbation-revision.pdf"
+                   target="_blank">VIEW PDF</a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">12</span>
+                <h2>Final Revision</h2>
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-2/12-final-revision.pdf"
+                   target="_blank">VIEW PDF</a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">13</span>
+                <h2>Problems from Chapters 12–14</h2>
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-2/13-chapters-12-to-14-problems.pdf"
+                   target="_blank">VIEW PDF</a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">14</span>
+                <h2>Perturbation Theory — Notes and Problems</h2>
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-2/14-perturbation-theory-notes-and-problems.pdf"
+                   target="_blank">VIEW PDF</a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">15</span>
+                <h2>Time-Dependent Perturbation Theory — Problems</h2>
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-2/15-time-dependent-perturbation-problems.pdf"
+                   target="_blank">VIEW PDF</a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">16</span>
+                <h2>Quantum Mechanics II — Problems</h2>
+                <a class="pdf-link"
+                   href="/notes/quantum-mechanics-2/16-quantum-mechanics-ii-problems.pdf"
+                   target="_blank">VIEW PDF</a>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- GERMAN -->
+
+    <div th:if="${lang == 'de'}">
+
+        <h1>Quantenmechanik II</h1>
+
+        <p class="subtitle">
+            Vorlesungsnotizen, Wiederholungen und Aufgaben
+            zu fortgeschrittenen Themen der Quantenmechanik.
+        </p>
+
+        <div class="pdf-list">
+
+            <div class="pdf-item">
+                <span class="pdf-number">01</span>
+                <h2>Störungstheorie</h2>
+                <a class="pdf-link" href="/notes/quantum-mechanics-2/01-perturbation-theory.pdf" target="_blank">
+                    PDF ANZEIGEN
+                </a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">02</span>
+                <h2>Entartete Störungstheorie</h2>
+                <a class="pdf-link" href="/notes/quantum-mechanics-2/02-degenerate-perturbation-theory.pdf" target="_blank">
+                    PDF ANZEIGEN
+                </a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">03</span>
+                <h2>Kapitel 12 — Teil I</h2>
+                <a class="pdf-link" href="/notes/quantum-mechanics-2/03-chapter-12-part-1.pdf" target="_blank">
+                    PDF ANZEIGEN
+                </a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">04</span>
+                <h2>Kapitel 12 — Teil II</h2>
+                <a class="pdf-link" href="/notes/quantum-mechanics-2/04-chapter-12-part-2.pdf" target="_blank">
+                    PDF ANZEIGEN
+                </a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">05</span>
+                <h2>Zeitabhängige Störungstheorie</h2>
+                <a class="pdf-link" href="/notes/quantum-mechanics-2/05-time-dependent-perturbation-theory.pdf" target="_blank">
+                    PDF ANZEIGEN
+                </a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">06</span>
+                <h2>Kapitel 13 — Teil I</h2>
+                <a class="pdf-link" href="/notes/quantum-mechanics-2/06-chapter-13-part-1.pdf" target="_blank">
+                    PDF ANZEIGEN
+                </a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">07</span>
+                <h2>Flussquantisierung</h2>
+                <a class="pdf-link" href="/notes/quantum-mechanics-2/07-flux-quantization.pdf" target="_blank">
+                    PDF ANZEIGEN
+                </a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">08</span>
+                <h2>Laguerre-Polynome</h2>
+                <a class="pdf-link" href="/notes/quantum-mechanics-2/08-laguerre-polynomials.pdf" target="_blank">
+                    PDF ANZEIGEN
+                </a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">09</span>
+                <h2>Kapitel 15</h2>
+                <a class="pdf-link" href="/notes/quantum-mechanics-2/09-chapter-15.pdf" target="_blank">
+                    PDF ANZEIGEN
+                </a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">10</span>
+                <h2>Quantenmechanik II — Wiederholung A</h2>
+                <a class="pdf-link" href="/notes/quantum-mechanics-2/10-quantum-mechanics-ii-revision-a.pdf" target="_blank">
+                    PDF ANZEIGEN
+                </a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">11</span>
+                <h2>Helium, Variationsmethode und Störungstheorie</h2>
+                <a class="pdf-link" href="/notes/quantum-mechanics-2/11-helium-variational-and-perturbation-revision.pdf" target="_blank">
+                    PDF ANZEIGEN
+                </a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">12</span>
+                <h2>Abschlusswiederholung</h2>
+                <a class="pdf-link" href="/notes/quantum-mechanics-2/12-final-revision.pdf" target="_blank">
+                    PDF ANZEIGEN
+                </a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">13</span>
+                <h2>Aufgaben zu Kapitel 12–14</h2>
+                <a class="pdf-link" href="/notes/quantum-mechanics-2/13-chapters-12-to-14-problems.pdf" target="_blank">
+                    PDF ANZEIGEN
+                </a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">14</span>
+                <h2>Störungstheorie — Notizen und Aufgaben</h2>
+                <a class="pdf-link" href="/notes/quantum-mechanics-2/14-perturbation-theory-notes-and-problems.pdf" target="_blank">
+                    PDF ANZEIGEN
+                </a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">15</span>
+                <h2>Zeitabhängige Störungstheorie — Aufgaben</h2>
+                <a class="pdf-link" href="/notes/quantum-mechanics-2/15-time-dependent-perturbation-problems.pdf" target="_blank">
+                    PDF ANZEIGEN
+                </a>
+            </div>
+
+            <div class="pdf-item">
+                <span class="pdf-number">16</span>
+                <h2>Quantenmechanik II — Aufgaben</h2>
+                <a class="pdf-link" href="/notes/quantum-mechanics-2/16-quantum-mechanics-ii-problems.pdf" target="_blank">
+                    PDF ANZEIGEN
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

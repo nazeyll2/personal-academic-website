@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:lang="${lang != null ? lang : 'en'}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title th:text="${lang == 'de'
+        ? 'Allgemeine Relativitätstheorie - Melih Gümüş'
+        : 'General Relativity - Melih Gümüş'}">
+    General Relativity - Melih Gümüş
+  </title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+
+      font-family: Georgia, serif;
+
+      color: #eeeeee;
+
+      background: #111111;
+    }
+
+
+    /* =========================
+       NAVIGATION
+       ========================= */
+
+    nav {
+      width: 100%;
+      height: 62px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      position: relative;
+
+      background: rgba(0, 0, 0, 0.85);
+
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+
+    .back-link {
+      font-family: 'Cinzel', serif;
+
+      color: #e5e5e5;
+
+      text-decoration: none;
+
+      font-size: 0.78rem;
+
+      letter-spacing: 2px;
+
+      transition: color 0.25s ease;
+    }
+
+
+    .back-link:hover {
+      color: #d4af37;
+    }
+
+
+    /* =========================
+       LANGUAGE SWITCH
+       ========================= */
+
+    .lang-switch {
+      position: absolute;
+
+      right: 35px;
+
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      font-family: 'Cinzel', serif;
+
+      font-size: 0.76rem;
+
+      letter-spacing: 2px;
+    }
+
+
+    .lang-switch a {
+      color: #888888;
+
+      text-decoration: none;
+
+      margin: 0 5px;
+    }
+
+
+    .lang-switch a.active {
+      color: #d4af37;
+    }
+
+
+    .separator {
+      color: #555555;
+    }
+
+
+    /* =========================
+       MAIN CONTAINER
+       ========================= */
+
+    .container {
+      max-width: 950px;
+
+      margin: 70px auto;
+
+      padding: 0 25px 80px;
+    }
+
+
+    h1 {
+      text-align: center;
+
+      font-family: 'Cinzel', serif;
+
+      font-weight: 500;
+
+      letter-spacing: 3px;
+
+      color: #ffffff;
+
+      margin-bottom: 15px;
+    }
+
+
+    .subtitle {
+      text-align: center;
+
+      color: #aaaaaa;
+
+      line-height: 1.7;
+
+      margin-bottom: 45px;
+    }
+
+
+    /* =========================
+       PDF LIST
+       ========================= */
+
+    .pdf-list {
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 18px;
+    }
+
+
+    .pdf-item {
+      padding: 24px;
+
+      background: rgba(20, 20, 20, 0.88);
+
+      border-left: 3px solid #d4af37;
+
+      transition: 0.25s ease;
+    }
+
+
+    .pdf-item:hover {
+      transform: translateX(4px);
+
+      background: rgba(28, 28, 28, 0.95);
+    }
+
+
+    .pdf-item h2 {
+      font-family: 'Cinzel', serif;
+
+      font-size: 1rem;
+
+      font-weight: 500;
+
+      color: #ffffff;
+
+      line-height: 1.5;
+
+      margin-bottom: 9px;
+    }
+
+
+    .pdf-description {
+      color: #aaaaaa;
+
+      font-size: 0.94rem;
+
+      line-height: 1.65;
+
+      margin-bottom: 15px;
+    }
+
+
+    .pdf-link {
+      display: inline-block;
+
+      padding: 8px 13px;
+
+      border: 1px solid #444444;
+
+      background: #191919;
+
+      color: #ffffff;
+
+      text-decoration: none;
+
+      font-family: 'Cinzel', serif;
+
+      font-size: 0.76rem;
+
+      letter-spacing: 1px;
+
+      transition: 0.3s;
+    }
+
+
+    .pdf-link:hover {
+      background: #d4af37;
+
+      border-color: #d4af37;
+
+      color: #111111;
+    }
+
+
+    /* =========================
+       MOBILE
+       ========================= */
+
+    @media (max-width: 750px) {
+
+      nav {
+        justify-content: flex-start;
+
+        padding-left: 20px;
+      }
+
+      .lang-switch {
+        right: 20px;
+      }
+
+      .container {
+        margin: 45px auto;
+
+        padding: 0 18px 60px;
+      }
+
+      h1 {
+        font-size: 1.7rem;
+      }
+
+      .pdf-item {
+        padding: 20px;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVIGATION
+     ========================= -->
+
+<nav>
+
+  <a th:if="${lang != 'de'}"
+     th:href="@{/lecture-notes(lang='en')}"
+     class="back-link">
+
+    ← [LECTURE NOTES]
+
+  </a>
+
+
+  <a th:if="${lang == 'de'}"
+     th:href="@{/lecture-notes(lang='de')}"
+     class="back-link">
+
+    ← [VORLESUNGSSKRIPTE]
+
+  </a>
+
+
+  <div class="lang-switch">
+
+    <a th:href="@{/lecture-notes/general-relativity(lang='en')}"
+       th:classappend="${lang != 'de'} ? 'active' : ''">
+      EN
+    </a>
+
+    <span class="separator">|</span>
+
+    <a th:href="@{/lecture-notes/general-relativity(lang='de')}"
+       th:classappend="${lang == 'de'} ? 'active' : ''">
+      DE
+    </a>
+
+  </div>
+
+</nav>
+
+
+
+<!-- =========================
+     MAIN CONTENT
+     ========================= -->
+
+<div class="container">
+
+
+  <!-- =========================
+       ENGLISH VERSION
+       ========================= -->
+
+  <div th:if="${lang != 'de'}">
+
+
+    <h1>General Relativity</h1>
+
+    <p class="subtitle">
+      Selected conceptual notes, derivations and calculations
+      in general relativity.
+    </p>
+
+
+    <div class="pdf-list">
+
+
+      <!-- 01 -->
+
+      <div class="pdf-item">
+
+        <h2>
+          01 — Origins of General Relativity
+        </h2>
+
+        <p class="pdf-description">
+          A conceptual introduction to the development of general relativity,
+          with emphasis on Mach, Newton, inertial motion, geodesics and
+          Einstein's interpretation of free fall.
+        </p>
+
+        <a class="pdf-link"
+           href="/notes/general-relativity/01-origin-of-general-relativity.pdf"
+           target="_blank">
+
+          VIEW PDF
+
+        </a>
+
+      </div>
+
+
+
+      <!-- 02 -->
+
+      <div class="pdf-item">
+
+        <h2>
+          02 — The Equivalence Principle: Common Misconceptions
+        </h2>
+
+        <p class="pdf-description">
+          A discussion of conceptual misconceptions surrounding
+          Einstein's equivalence principle, gravitational redshift
+          and the interpretation of gravity in local Lorentz frames.
+        </p>
+
+        <a class="pdf-link"
+           href="/notes/general-relativity/02-equivalence-principle.pdf"
+           target="_blank">
+
+          VIEW PDF
+
+        </a>
+
+      </div>
+
+
+
+      <!-- 03 -->
+
+      <div class="pdf-item">
+
+        <h2>
+          03 — Riemann Curvature, Ricci Tensor and Geodesics
+        </h2>
+
+        <p class="pdf-description">
+          Mathematical notes on curved spacetime, geodesic motion,
+          Christoffel symbols, the Riemann curvature tensor
+          and the Ricci tensor.
+        </p>
+
+        <a class="pdf-link"
+           href="/notes/general-relativity/03-riemann-ricci-geodesics.pdf"
+           target="_blank">
+
+          VIEW PDF
+
+        </a>
+
+      </div>
+
+
+
+      <!-- 04 -->
+
+      <div class="pdf-item">
+
+        <h2>
+          04 — Einstein Field Equations
+        </h2>
+
+        <p class="pdf-description">
+          A derivational study of the Einstein field equations,
+          including curvature tensors, Bianchi identities,
+          energy-momentum conservation and geodesic motion.
+        </p>
+
+        <a class="pdf-link"
+           href="/notes/general-relativity/04-einstein-field-equations.pdf"
+           target="_blank">
+
+          VIEW PDF
+
+        </a>
+
+      </div>
+
+
+
+      <!-- 05 -->
+
+      <div class="pdf-item">
+
+        <h2>
+          05 — Einstein–Hilbert Action
+        </h2>
+
+        <p class="pdf-description">
+          A step-by-step derivation of the gravitational field equations
+          from the Einstein–Hilbert action through variations of the metric,
+          determinant and curvature terms.
+        </p>
+
+        <a class="pdf-link"
+           href="/notes/general-relativity/05-einstein-hilbert-action.pdf"
+           target="_blank">
+
+          VIEW PDF
+
+        </a>
+
+      </div>
+
+
+
+      <!-- 06 -->
+
+      <div class="pdf-item">
+
+        <h2>
+          06 — Derivation of the Schwarzschild Metric
+        </h2>
+
+        <p class="pdf-description">
+          A derivation of the Schwarzschild solution from a general
+          spherically symmetric metric using Christoffel symbols,
+          the Ricci tensor and the vacuum Einstein equations.
+        </p>
+
+        <a class="pdf-link"
+           href="/notes/general-relativity/06-schwarzschild-metric.pdf"
+           target="_blank">
+
+          VIEW PDF
+
+        </a>
+
+      </div>
+
+
+
+      <!-- 07 -->
+
+      <div class="pdf-item">
+
+        <h2>
+          07 — Rindler Motion and Uniform Acceleration
+        </h2>
+
+        <p class="pdf-description">
+          A derivation of uniformly accelerated relativistic motion
+          using four-velocity and four-acceleration, leading to
+          the hyperbolic worldline of a Rindler observer.
+        </p>
+
+        <a class="pdf-link"
+           href="/notes/general-relativity/07-rindler-motion.pdf"
+           target="_blank">
+
+          VIEW PDF
+
+        </a>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =========================
+       GERMAN VERSION
+       ========================= -->
+
+  <div th:if="${lang == 'de'}">
+
+
+    <h1>Allgemeine Relativitätstheorie</h1>
+
+    <p class="subtitle">
+      Ausgewählte konzeptionelle Notizen, Herleitungen und Berechnungen
+      zur Allgemeinen Relativitätstheorie.
+    </p>
+
+
+    <div class="pdf-list">
+
+
+      <!-- 01 -->
+
+      <div class="pdf-item">
+
+        <h2>
+          01 — Ursprünge der Allgemeinen Relativitätstheorie
+        </h2>
+
+        <p class="pdf-description">
+          Eine konzeptionelle Einführung in die Entwicklung der
+          Allgemeinen Relativitätstheorie mit Schwerpunkt auf Mach,
+          Newton, Trägheitsbewegung, Geodäten und Einsteins Deutung
+          des freien Falls.
+        </p>
+
+        <a class="pdf-link"
+           href="/notes/general-relativity/01-origin-of-general-relativity.pdf"
+           target="_blank">
+
+          PDF ANZEIGEN
+
+        </a>
+
+      </div>
+
+
+
+      <!-- 02 -->
+
+      <div class="pdf-item">
+
+        <h2>
+          02 — Äquivalenzprinzip: Häufige Missverständnisse
+        </h2>
+
+        <p class="pdf-description">
+          Eine Diskussion konzeptioneller Missverständnisse zum
+          Äquivalenzprinzip, zur gravitativen Rotverschiebung
+          und zur Interpretation der Gravitation in lokalen
+          Lorentz-Systemen.
+        </p>
+
+        <a class="pdf-link"
+           href="/notes/general-relativity/02-equivalence-principle.pdf"
+           target="_blank">
+
+          PDF ANZEIGEN
+
+        </a>
+
+      </div>
+
+
+
+      <!-- 03 -->
+
+      <div class="pdf-item">
+
+        <h2>
+          03 — Riemann-Krümmung, Ricci-Tensor und Geodäten
+        </h2>
+
+        <p class="pdf-description">
+          Mathematische Notizen über gekrümmte Raumzeit,
+          geodätische Bewegung, Christoffel-Symbole,
+          den Riemann-Krümmungstensor und den Ricci-Tensor.
+        </p>
+
+        <a class="pdf-link"
+           href="/notes/general-relativity/03-riemann-ricci-geodesics.pdf"
+           target="_blank">
+
+          PDF ANZEIGEN
+
+        </a>
+
+      </div>
+
+
+
+      <!-- 04 -->
+
+      <div class="pdf-item">
+
+        <h2>
+          04 — Einsteinsche Feldgleichungen
+        </h2>
+
+        <p class="pdf-description">
+          Eine Herleitung der Einsteinschen Feldgleichungen
+          mit Krümmungstensoren, Bianchi-Identitäten,
+          Energie-Impuls-Erhaltung und geodätischer Bewegung.
+        </p>
+
+        <a class="pdf-link"
+           href="/notes/general-relativity/04-einstein-field-equations.pdf"
+           target="_blank">
+
+          PDF ANZEIGEN
+
+        </a>
+
+      </div>
+
+
+
+      <!-- 05 -->
+
+      <div class="pdf-item">
+
+        <h2>
+          05 — Einstein–Hilbert-Wirkung
+        </h2>
+
+        <p class="pdf-description">
+          Eine schrittweise Herleitung der Gravitationsfeldgleichungen
+          aus der Einstein–Hilbert-Wirkung durch Variation
+          der Metrik, der Determinante und der Krümmungsterme.
+        </p>
+
+        <a class="pdf-link"
+           href="/notes/general-relativity/05-einstein-hilbert-action.pdf"
+           target="_blank">
+
+          PDF ANZEIGEN
+
+        </a>
+
+      </div>
+
+
+
+      <!-- 06 -->
+
+      <div class="pdf-item">
+
+        <h2>
+          06 — Herleitung der Schwarzschild-Metrik
+        </h2>
+
+        <p class="pdf-description">
+          Eine Herleitung der Schwarzschild-Lösung aus einer
+          allgemein kugelsymmetrischen Metrik mithilfe von
+          Christoffel-Symbolen, Ricci-Tensor und
+          Einstein-Gleichungen im Vakuum.
+        </p>
+
+        <a class="pdf-link"
+           href="/notes/general-relativity/06-schwarzschild-metric.pdf"
+           target="_blank">
+
+          PDF ANZEIGEN
+
+        </a>
+
+      </div>
+
+
+
+      <!-- 07 -->
+
+      <div class="pdf-item">
+
+        <h2>
+          07 — Rindler-Bewegung und gleichmäßige Beschleunigung
+        </h2>
+
+        <p class="pdf-description">
+          Eine Herleitung gleichmäßig beschleunigter relativistischer
+          Bewegung mithilfe von Vierergeschwindigkeit und
+          Viererbeschleunigung bis zur hyperbolischen Weltlinie
+          eines Rindler-Beobachters.
+        </p>
+
+        <a class="pdf-link"
+           href="/notes/general-relativity/07-rindler-motion.pdf"
+           target="_blank">
+
+          PDF ANZEIGEN
+
+        </a>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+</div>
+
+
+</body>
+</html>

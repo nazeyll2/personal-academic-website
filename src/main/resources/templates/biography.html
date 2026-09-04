@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:lang="${lang != null ? lang : 'en'}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${lang == 'de'
+        ? 'Biografie - Melih Gümüş'
+        : 'Biography - Melih Gümüş'}">
+        Biography - Melih Gümüş
+    </title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+        }
+
+        body {
+            font-family: Georgia, serif;
+            color: #eeeeee;
+
+            background-image:
+                    linear-gradient(
+                            rgba(10, 10, 10, 0.74),
+                            rgba(10, 10, 10, 0.82)
+                    ),
+                    url('/images/biography-bg.jpg');
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+
+        /* =========================
+           NAVIGATION
+           ========================= */
+
+        nav {
+            width: 100%;
+            height: 62px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            position: relative;
+
+            background: rgba(0, 0, 0, 0.72);
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+            backdrop-filter: blur(3px);
+
+            z-index: 10;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            list-style: none;
+
+            gap: 28px;
+
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            font-family: 'Cinzel', serif;
+
+            color: #e5e5e5;
+
+            text-decoration: none;
+
+            font-size: 0.78rem;
+
+            letter-spacing: 2px;
+
+            transition: color 0.25s ease;
+        }
+
+        nav a:hover {
+            color: #d4af37;
+        }
+
+
+        /* =========================
+           LANGUAGE SWITCH
+           ========================= */
+
+        .lang-switch {
+            position: absolute;
+
+            right: 35px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            display: flex;
+            align-items: center;
+
+            gap: 8px;
+
+            font-family: 'Cinzel', serif;
+
+            font-size: 0.76rem;
+
+            letter-spacing: 2px;
+        }
+
+        .lang-switch a {
+            color: #888888;
+        }
+
+        .lang-switch a.active {
+            color: #d4af37;
+        }
+
+        .separator {
+            color: #555555;
+        }
+
+
+        /* =========================
+           CONTENT
+           ========================= */
+
+        .container {
+            max-width: 850px;
+
+            margin: 65px auto;
+
+            padding: 40px 35px 70px 35px;
+
+            line-height: 1.85;
+
+            background: rgba(0, 0, 0, 0.28);
+
+            backdrop-filter: blur(2px);
+
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+
+            text-align: center;
+
+            margin-bottom: 45px;
+
+            font-weight: 500;
+
+            letter-spacing: 3px;
+
+            color: #ffffff;
+        }
+
+        p {
+            margin-bottom: 25px;
+
+            font-size: 1.03rem;
+
+            text-align: justify;
+        }
+
+
+        /* =========================
+           CV SECTION
+           ========================= */
+
+        .cv-section {
+            margin-top: 55px;
+
+            padding-top: 35px;
+
+            border-top: 1px solid rgba(255,255,255,0.15);
+
+            text-align: center;
+        }
+
+        .cv-section h2 {
+            font-family: 'Cinzel', serif;
+
+            font-weight: 500;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 15px;
+        }
+
+        .cv-section p {
+            text-align: center;
+
+            color: #bbbbbb;
+
+            font-size: 0.95rem;
+        }
+
+        .cv-button {
+            display: inline-block;
+
+            margin-top: 10px;
+
+            padding: 12px 22px;
+
+            border: 1px solid #d4af37;
+
+            color: #d4af37;
+
+            text-decoration: none;
+
+            font-family: 'Cinzel', serif;
+
+            font-size: 0.8rem;
+
+            letter-spacing: 1.5px;
+
+            transition: 0.3s;
+        }
+
+        .cv-button:hover {
+            background: #d4af37;
+
+            color: #111111;
+        }
+
+
+        /* =========================
+           MOBILE
+           ========================= */
+
+        @media (max-width: 1000px) {
+
+            nav ul {
+                gap: 16px;
+            }
+
+            nav a {
+                font-size: 0.68rem;
+            }
+
+        }
+
+        @media (max-width: 850px) {
+
+            nav {
+                height: auto;
+
+                min-height: 95px;
+
+                padding: 42px 20px 15px 20px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+
+                gap: 10px 15px;
+            }
+
+            .lang-switch {
+                top: 17px;
+
+                right: 20px;
+
+                transform: none;
+            }
+
+            .container {
+                margin: 35px 15px;
+
+                padding: 30px 22px 50px 22px;
+            }
+
+            p {
+                text-align: left;
+
+                font-size: 0.98rem;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVIGATION
+     ========================= -->
+
+<nav>
+
+
+    <!-- ENGLISH MENU -->
+
+    <ul th:if="${lang != 'de'}">
+
+        <li>
+            <a th:href="@{/biography(lang='en')}">
+                [BIOGRAPHY]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/essays(lang='en')}">
+                [ESSAYS]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/publications(lang='en')}">
+                [PUBLICATIONS]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/lecture-notes(lang='en')}">
+                [LECTURE NOTES]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/research-group(lang='en')}">
+                [RESEARCH GROUP]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/contact(lang='en')}">
+                [CONTACT]
+            </a>
+        </li>
+
+    </ul>
+
+
+    <!-- GERMAN MENU -->
+
+    <ul th:if="${lang == 'de'}">
+
+        <li>
+            <a th:href="@{/biography(lang='de')}">
+                [BIOGRAFIE]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/essays(lang='de')}">
+                [ESSAYS]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/publications(lang='de')}">
+                [PUBLIKATIONEN]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/lecture-notes(lang='de')}">
+                [VORLESUNGSSKRIPTE]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/research-group(lang='de')}">
+                [FORSCHUNGSGRUPPE]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/contact(lang='de')}">
+                [KONTAKT]
+            </a>
+        </li>
+
+    </ul>
+
+
+    <!-- LANGUAGE SWITCH -->
+
+    <div class="lang-switch">
+
+        <a th:href="@{/biography(lang='en')}"
+           th:classappend="${lang != 'de'} ? 'active' : ''">
+            EN
+        </a>
+
+        <span class="separator">|</span>
+
+        <a th:href="@{/biography(lang='de')}"
+           th:classappend="${lang == 'de'} ? 'active' : ''">
+            DE
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================
+     MAIN CONTENT
+     ========================= -->
+
+<div class="container">
+
+
+    <!-- =========================
+         ENGLISH
+         ========================= -->
+
+    <div th:if="${lang != 'de'}">
+
+        <h1>Biography</h1>
+
+
+        <p>
+            My relationship with physics grew from a desire to understand
+            why nature behaves the way it does. Since childhood, questions
+            concerning existence, nature and the fundamental structure of
+            physical reality have occupied an important place in the way I think.
+            Over time, I came to see physics as the most natural way of pursuing
+            these questions systematically and mathematically.
+        </p>
+
+
+        <p>
+            I began my academic journey at Çankaya University, where I studied
+            Civil Engineering and completed my bachelor's degree in 2020.
+            However, my interest in physics gradually became the central direction
+            of my academic life. In 2021, I therefore began a second undergraduate
+            degree in Physics at Ankara University. I graduated in 2025 with a
+            cumulative GPA of 3.52/4.00 and with honours.
+        </p>
+
+
+        <p>
+            During my physics education, I became particularly interested in
+            general relativity, electromagnetic theory, quantum mechanics,
+            cosmology and differential geometry. Mach's principle and Einstein's
+            equivalence principle played an important role in shaping the way
+            I think about gravitation. My encounter with the Rindler frame led
+            me to examine more deeply the geometric relationship between
+            acceleration and gravity.
+        </p>
+
+
+        <p>
+            These questions eventually brought me to teleparallel geometry,
+            where gravitation can be formulated through torsion rather than
+            spacetime curvature. I became especially interested in tetrads,
+            Weitzenböck geometry and the possibility of describing inertia
+            and gravitation within a common geometric framework.
+        </p>
+
+
+        <p>
+            My research interests currently include the geometric foundations
+            of gravitation, the origin of inertia, teleparallel gravity,
+            non-singular black-hole interiors and the geometric emergence
+            of electromagnetism. I have worked on geometric drift formulations
+            of gravitation, regular black-hole interior solutions and a geometric
+            interpretation of electromagnetism in teleparallel spacetime.
+        </p>
+
+
+        <p>
+            Alongside my independent research, I have studied differential
+            geometry and topology and have continued to develop my background
+            in quantum field theory. My long-term goal is to work at the
+            intersection of general relativity, quantum field theory and modern
+            geometry, with particular interest in the geometric origin of
+            fundamental interactions.
+        </p>
+
+
+        <p>
+            For me, physics is not merely an academic profession. It is the
+            way I pursue the questions that have occupied my mind since childhood:
+            to understand the structures and principles hidden within nature.
+        </p>
+
+
+        <!-- CV -->
+
+        <div class="cv-section">
+
+            <h2>Curriculum Vitae</h2>
+
+            <p>
+                Academic background, research experience,
+                publications and selected projects.
+            </p>
+
+            <a th:href="@{/documents/melih-gumus-cv.pdf}"
+               target="_blank"
+               class="cv-button">
+                VIEW CV
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         GERMAN
+         ========================= -->
+
+    <div th:if="${lang == 'de'}">
+
+        <h1>Biografie</h1>
+
+
+        <p>
+            Meine Beziehung zur Physik entstand aus dem Wunsch zu verstehen,
+            warum sich die Natur so verhält, wie sie es tut. Seit meiner Kindheit
+            beschäftigen mich Fragen nach der Existenz, der Natur und der
+            grundlegenden Struktur der physikalischen Wirklichkeit. Mit der Zeit
+            begann ich, die Physik als den natürlichsten Weg zu betrachten,
+            solchen Fragen systematisch und mathematisch nachzugehen.
+        </p>
+
+
+        <p>
+            Meine akademische Laufbahn begann an der Çankaya Universität,
+            wo ich Bauingenieurwesen studierte und 2020 meinen Bachelorabschluss
+            erwarb. Mein Interesse an der Physik wurde jedoch zunehmend zum
+            bestimmenden Schwerpunkt meines akademischen Lebens. Daher begann
+            ich 2021 ein zweites Bachelorstudium in Physik an der Universität
+            Ankara. Im Jahr 2025 schloss ich dieses Studium mit einem
+            Notendurchschnitt von 3,52/4,00 und mit Auszeichnung ab.
+        </p>
+
+
+        <p>
+            Während meines Physikstudiums interessierte ich mich besonders
+            für Allgemeine Relativitätstheorie, elektromagnetische Theorie,
+            Quantenmechanik, Kosmologie und Differentialgeometrie. Das Machsche
+            Prinzip und Einsteins Äquivalenzprinzip haben meine Vorstellungen
+            über die Natur der Gravitation wesentlich geprägt. Die Beschäftigung
+            mit dem Rindler-System führte mich dazu, den geometrischen
+            Zusammenhang zwischen Beschleunigung und Gravitation eingehender
+            zu untersuchen.
+        </p>
+
+
+        <p>
+            Diese Fragestellungen führten mich schließlich zur teleparallelen
+            Geometrie, in der Gravitation durch Torsion statt durch
+            Raumzeitkrümmung beschrieben werden kann. Besonders interessieren
+            mich Tetraden, die Weitzenböck-Geometrie und die Möglichkeit,
+            Trägheit und Gravitation innerhalb eines gemeinsamen geometrischen
+            Rahmens zu beschreiben.
+        </p>
+
+
+        <p>
+            Meine derzeitigen Forschungsinteressen umfassen die geometrischen
+            Grundlagen der Gravitation, den Ursprung der Trägheit,
+            teleparallele Gravitation, nichtsinguläre Innenräume Schwarzer Löcher
+            und die geometrische Entstehung des Elektromagnetismus. Ich habe
+            unter anderem an geometrischen Driftformulierungen der Gravitation,
+            regulären Lösungen für Schwarze-Loch-Innenräume und einer geometrischen
+            Interpretation des Elektromagnetismus in der teleparallelen Raumzeit
+            gearbeitet.
+        </p>
+
+
+        <p>
+            Neben meiner unabhängigen Forschung habe ich mich intensiv mit
+            Differentialgeometrie und Topologie beschäftigt und meine Kenntnisse
+            in der Quantenfeldtheorie weiterentwickelt. Mein langfristiges Ziel
+            ist es, an der Schnittstelle von Allgemeiner Relativitätstheorie,
+            Quantenfeldtheorie und moderner Geometrie zu arbeiten, insbesondere
+            an Fragen nach dem geometrischen Ursprung fundamentaler Wechselwirkungen.
+        </p>
+
+
+        <p>
+            Für mich ist Physik nicht nur ein akademischer Beruf.
+            Sie ist die Art und Weise, wie ich den Fragen nachgehe,
+            die mich seit meiner Kindheit beschäftigen: die verborgenen
+            Strukturen und Prinzipien der Natur zu verstehen.
+        </p>
+
+
+        <!-- CV -->
+
+        <div class="cv-section">
+
+            <h2>Lebenslauf</h2>
+
+            <p>
+                Akademischer Werdegang, Forschungserfahrung,
+                Publikationen und ausgewählte Projekte.
+            </p>
+
+            <a th:href="@{/documents/melih-gumus-cv.pdf}"
+               target="_blank"
+               class="cv-button">
+                LEBENSLAUF ANZEIGEN
+            </a>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+</body>
+</html>
