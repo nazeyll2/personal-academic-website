@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:lang="${lang != null ? lang : 'en'}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${lang == 'de'
+        ? 'Essays - Melih Gümüş'
+        : 'Essays - Melih Gümüş'}">
+        Essays - Melih Gümüş
+    </title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            min-height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #111111;
+            color: #eeeeee;
+            font-family: Georgia, serif;
+        }
+
+        nav {
+            width: 100%;
+            min-height: 62px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            position: relative;
+
+            padding: 0 150px 0 20px;
+
+            background: rgba(0, 0, 0, 0.86);
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+
+            backdrop-filter: blur(4px);
+
+            z-index: 10;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+
+            list-style: none;
+
+            gap: 26px;
+        }
+
+        nav a {
+            font-family: 'Cinzel', serif;
+
+            color: #e6e6e6;
+
+            text-decoration: none;
+
+            font-size: 0.76rem;
+
+            letter-spacing: 1.8px;
+
+            transition: color 0.25s ease;
+        }
+
+        nav a:hover {
+            color: #d4af37;
+        }
+
+        nav a.current-page {
+            color: #d4af37;
+        }
+
+        .lang-switch {
+            position: absolute;
+
+            right: 34px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            font-family: 'Cinzel', serif;
+
+            font-size: 0.75rem;
+
+            letter-spacing: 2px;
+
+            white-space: nowrap;
+        }
+
+        .lang-switch a {
+            color: #777777;
+
+            margin: 0 5px;
+        }
+
+        .lang-switch a.active {
+            color: #d4af37;
+        }
+
+        .separator {
+            color: #555555;
+        }
+
+        .container {
+            max-width: 1120px;
+
+            margin: 70px auto;
+
+            padding: 0 25px 80px;
+        }
+
+        .page-heading {
+            text-align: center;
+
+            margin-bottom: 52px;
+        }
+
+        .page-heading h1 {
+            font-family: 'Cinzel', serif;
+
+            font-size: 2.3rem;
+
+            font-weight: 500;
+
+            letter-spacing: 4px;
+
+            margin-bottom: 14px;
+        }
+
+        .page-heading p {
+            max-width: 720px;
+
+            margin: 0 auto;
+
+            color: #aaaaaa;
+
+            line-height: 1.75;
+        }
+
+        .essay-grid {
+            display: grid;
+
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+
+            gap: 28px;
+        }
+
+        .essay-card {
+            display: block;
+
+            background: #171717;
+
+            border: 1px solid rgba(255,255,255,0.07);
+
+            text-decoration: none;
+
+            color: #eeeeee;
+
+            overflow: hidden;
+
+            transition:
+                    transform 0.3s ease,
+                    border-color 0.3s ease,
+                    box-shadow 0.3s ease;
+        }
+
+        .essay-card:hover {
+            transform: translateY(-6px);
+
+            border-color: rgba(212,175,55,0.55);
+
+            box-shadow: 0 18px 35px rgba(0,0,0,0.35);
+        }
+
+        .essay-cover {
+            width: 100%;
+
+            height: 280px;
+
+            object-fit: cover;
+
+            display: block;
+
+            filter: brightness(0.88);
+
+            transition:
+                    transform 0.4s ease,
+                    filter 0.4s ease;
+        }
+
+        .essay-card:hover .essay-cover {
+            transform: scale(1.025);
+
+            filter: brightness(1);
+        }
+
+        .essay-content {
+            padding: 28px;
+        }
+
+        .essay-source {
+            display: block;
+
+            margin-bottom: 12px;
+
+            color: #d4af37;
+
+            font-family: 'Cinzel', serif;
+
+            font-size: 0.72rem;
+
+            letter-spacing: 2px;
+        }
+
+        .essay-content h2 {
+            font-family: 'Cinzel', serif;
+
+            font-size: 1.22rem;
+
+            line-height: 1.45;
+
+            font-weight: 500;
+
+            margin-bottom: 16px;
+
+            color: #ffffff;
+        }
+
+        .essay-content p {
+            color: #aaaaaa;
+
+            line-height: 1.7;
+
+            font-size: 0.95rem;
+
+            margin-bottom: 20px;
+        }
+
+        .read-more {
+            color: #d4af37;
+
+            font-family: 'Cinzel', serif;
+
+            font-size: 0.74rem;
+
+            letter-spacing: 1.5px;
+        }
+
+        @media (max-width: 1050px) {
+
+            nav {
+                padding: 48px 20px 16px;
+            }
+
+            nav ul {
+                gap: 12px 18px;
+            }
+
+            .lang-switch {
+                top: 17px;
+
+                right: 20px;
+
+                transform: none;
+            }
+
+        }
+
+        @media (max-width: 760px) {
+
+            .container {
+                margin: 48px auto;
+
+                padding: 0 18px 60px;
+            }
+
+            .page-heading h1 {
+                font-size: 1.8rem;
+
+                letter-spacing: 2px;
+            }
+
+            .essay-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .essay-cover {
+                height: 230px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+
+<nav>
+
+    <!-- ENGLISH MENU -->
+
+    <ul th:if="${lang != 'de'}">
+
+        <li>
+            <a th:href="@{/(lang='en')}">
+                [HOME]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/biography(lang='en')}">
+                [BIOGRAPHY]
+            </a>
+        </li>
+
+        <li>
+            <a class="current-page"
+               th:href="@{/essays(lang='en')}">
+                [ESSAYS]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/publications(lang='en')}">
+                [PUBLICATIONS]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/lecture-notes(lang='en')}">
+                [LECTURE NOTES]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/research-group(lang='en')}">
+                [RESEARCH GROUP]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/contact(lang='en')}">
+                [CONTACT]
+            </a>
+        </li>
+
+    </ul>
+
+
+    <!-- GERMAN MENU -->
+
+    <ul th:if="${lang == 'de'}">
+
+        <li>
+            <a th:href="@{/(lang='de')}">
+                [HOME]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/biography(lang='de')}">
+                [BIOGRAFIE]
+            </a>
+        </li>
+
+        <li>
+            <a class="current-page"
+               th:href="@{/essays(lang='de')}">
+                [ESSAYS]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/publications(lang='de')}">
+                [PUBLIKATIONEN]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/lecture-notes(lang='de')}">
+                [VORLESUNGSSKRIPTE]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/research-group(lang='de')}">
+                [FORSCHUNGSGRUPPE]
+            </a>
+        </li>
+
+        <li>
+            <a th:href="@{/contact(lang='de')}">
+                [KONTAKT]
+            </a>
+        </li>
+
+    </ul>
+
+
+    <!-- LANGUAGE SWITCH -->
+
+    <div class="lang-switch">
+
+        <a th:href="@{/essays(lang='en')}"
+           th:classappend="${lang != 'de'} ? 'active' : ''">
+            EN
+        </a>
+
+        <span class="separator">|</span>
+
+        <a th:href="@{/essays(lang='de')}"
+           th:classappend="${lang == 'de'} ? 'active' : ''">
+            DE
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<main class="container">
+
+
+    <!-- =========================
+         ENGLISH
+         ========================= -->
+
+    <div th:if="${lang != 'de'}">
+
+        <div class="page-heading">
+
+            <h1>Essays</h1>
+
+            <p>
+                Selected essays and reflections on physics,
+                gravitation, geometry and the conceptual foundations
+                of modern theoretical physics.
+            </p>
+
+        </div>
+
+
+        <div class="essay-grid">
+
+
+            <!-- ESSAY 01 -->
+
+            <a class="essay-card"
+               href="https://www.linkedin.com/pulse/revisiting-machs-principle-21st-century-melih-g%C3%BCm%C3%BC%C5%9F-sn8mf"
+               target="_blank"
+               rel="noopener noreferrer">
+
+                <img class="essay-cover"
+                     src="/images/essays/machs-principle.png"
+                     alt="Revisiting Mach's Principle in the 21st Century">
+
+                <div class="essay-content">
+
+                    <span class="essay-source">
+                        LINKEDIN ARTICLE
+                    </span>
+
+                    <h2>
+                        Revisiting Mach's Principle in the 21st Century
+                    </h2>
+
+                    <p>
+                        A reflection on Mach's principle, inertia and the
+                        conceptual relationship between matter, motion and
+                        gravitation in modern theoretical physics.
+                    </p>
+
+                    <span class="read-more">
+                        READ ON LINKEDIN →
+                    </span>
+
+                </div>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================
+         GERMAN
+         ========================= -->
+
+    <div th:if="${lang == 'de'}">
+
+        <div class="page-heading">
+
+            <h1>Essays</h1>
+
+            <p>
+                Ausgewählte Essays und Gedanken zu Physik,
+                Gravitation, Geometrie und den konzeptionellen
+                Grundlagen der modernen theoretischen Physik.
+            </p>
+
+        </div>
+
+
+        <div class="essay-grid">
+
+
+            <!-- ESSAY 01 -->
+
+            <a class="essay-card"
+               href="https://www.linkedin.com/pulse/revisiting-machs-principle-21st-century-melih-g%C3%BCm%C3%BC%C5%9F-sn8mf"
+               target="_blank"
+               rel="noopener noreferrer">
+
+                <img class="essay-cover"
+                     src="/images/essays/machs-principle.png"
+                     alt="Revisiting Mach's Principle in the 21st Century">
+
+                <div class="essay-content">
+
+                    <span class="essay-source">
+                        LINKEDIN-ARTIKEL
+                    </span>
+
+                    <h2>
+                        Revisiting Mach's Principle in the 21st Century
+                    </h2>
+
+                    <p>
+                        Eine Betrachtung des Machschen Prinzips,
+                        der Trägheit und des konzeptionellen Zusammenhangs
+                        zwischen Materie, Bewegung und Gravitation
+                        in der modernen theoretischen Physik.
+                    </p>
+
+                    <span class="read-more">
+                        AUF LINKEDIN LESEN →
+                    </span>
+
+                </div>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+</main>
+
+
+</body>
+</html>

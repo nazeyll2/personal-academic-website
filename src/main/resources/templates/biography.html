@@ -103,6 +103,10 @@
             color: #d4af37;
         }
 
+        nav a.current-page {
+            color: #d4af37;
+        }
+
 
         /* =========================
            LANGUAGE SWITCH
@@ -249,14 +253,15 @@
            MOBILE
            ========================= */
 
-        @media (max-width: 1000px) {
+        @media (max-width: 1100px) {
 
             nav ul {
-                gap: 16px;
+                gap: 15px;
             }
 
             nav a {
-                font-size: 0.68rem;
+                font-size: 0.67rem;
+                letter-spacing: 1.5px;
             }
 
         }
@@ -266,7 +271,7 @@
             nav {
                 height: auto;
 
-                min-height: 95px;
+                min-height: 105px;
 
                 padding: 42px 20px 15px 20px;
             }
@@ -313,12 +318,21 @@
 <nav>
 
 
-    <!-- ENGLISH MENU -->
+    <!-- =========================
+         ENGLISH MENU
+         ========================= -->
 
     <ul th:if="${lang != 'de'}">
 
         <li>
-            <a th:href="@{/biography(lang='en')}">
+            <a th:href="@{/(lang='en')}">
+                [HOME]
+            </a>
+        </li>
+
+        <li>
+            <a class="current-page"
+               th:href="@{/biography(lang='en')}">
                 [BIOGRAPHY]
             </a>
         </li>
@@ -356,12 +370,21 @@
     </ul>
 
 
-    <!-- GERMAN MENU -->
+    <!-- =========================
+         GERMAN MENU
+         ========================= -->
 
     <ul th:if="${lang == 'de'}">
 
         <li>
-            <a th:href="@{/biography(lang='de')}">
+            <a th:href="@{/(lang='de')}">
+                [HOME]
+            </a>
+        </li>
+
+        <li>
+            <a class="current-page"
+               th:href="@{/biography(lang='de')}">
                 [BIOGRAFIE]
             </a>
         </li>
@@ -399,7 +422,9 @@
     </ul>
 
 
-    <!-- LANGUAGE SWITCH -->
+    <!-- =========================
+         LANGUAGE SWITCH
+         ========================= -->
 
     <div class="lang-switch">
 
@@ -504,7 +529,9 @@
         </p>
 
 
-        <!-- CV -->
+        <!-- =========================
+             CV
+             ========================= -->
 
         <div class="cv-section">
 
@@ -609,7 +636,9 @@
         </p>
 
 
-        <!-- CV -->
+        <!-- =========================
+             CV
+             ========================= -->
 
         <div class="cv-section">
 
