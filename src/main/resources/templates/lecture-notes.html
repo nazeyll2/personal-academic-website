@@ -19,6 +19,7 @@
           rel="stylesheet">
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -32,24 +33,46 @@
 
         body {
             min-height: 100vh;
-            background: #111111;
-            color: #eeeeee;
             font-family: Georgia, serif;
+            color: #eeeeee;
+
+            background-image:
+                    linear-gradient(
+                            rgba(10, 10, 10, 0.78),
+                            rgba(10, 10, 10, 0.88)
+                    ),
+                    url('/images/lecture-notes-bg.jpg');
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
         }
+
+
+        /* =========================
+           NAVIGATION
+           ========================= */
 
         nav {
             width: 100%;
             min-height: 62px;
+
             display: flex;
             justify-content: center;
             align-items: center;
+
             position: relative;
+
             padding: 0 150px 0 20px;
 
             background: rgba(0, 0, 0, 0.85);
+
             border-bottom: 1px solid rgba(255,255,255,0.08);
 
             backdrop-filter: blur(4px);
+
+            z-index: 10;
         }
 
         nav ul {
@@ -57,16 +80,23 @@
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
+
             list-style: none;
-            gap: 26px;
+
+            gap: 24px;
         }
 
         nav a {
             font-family: 'Cinzel', serif;
+
             color: #e6e6e6;
+
             text-decoration: none;
-            font-size: 0.76rem;
-            letter-spacing: 1.8px;
+
+            font-size: 0.74rem;
+
+            letter-spacing: 1.7px;
+
             transition: color 0.25s ease;
         }
 
@@ -78,20 +108,31 @@
             color: #d4af37;
         }
 
+
+        /* =========================
+           LANGUAGE SWITCH
+           ========================= */
+
         .lang-switch {
             position: absolute;
+
             right: 34px;
             top: 50%;
+
             transform: translateY(-50%);
 
             font-family: 'Cinzel', serif;
+
             font-size: 0.75rem;
+
             letter-spacing: 2px;
+
             white-space: nowrap;
         }
 
         .lang-switch a {
             color: #777777;
+
             margin: 0 5px;
         }
 
@@ -103,65 +144,104 @@
             color: #555555;
         }
 
+
+        /* =========================
+           PAGE
+           ========================= */
+
         .container {
             max-width: 1120px;
+
             margin: 72px auto;
+
             padding: 0 25px 80px;
         }
 
         .page-heading {
             text-align: center;
+
             margin-bottom: 52px;
         }
 
         .page-heading h1 {
             font-family: 'Cinzel', serif;
+
             font-size: 2.3rem;
+
             font-weight: 500;
+
             letter-spacing: 4px;
+
             color: #ffffff;
+
             margin-bottom: 14px;
         }
 
         .page-heading p {
             max-width: 780px;
+
             margin: 0 auto;
+
             color: #aaaaaa;
+
             line-height: 1.75;
+
             font-size: 0.96rem;
         }
 
+
+        /* =========================
+           NOTES GRID
+           ========================= */
+
         .notes-grid {
             display: grid;
+
             grid-template-columns: repeat(2, minmax(0, 1fr));
+
             gap: 24px;
         }
 
+
+        /* =========================
+           NOTE CARD
+           ========================= */
+
         .note-card {
             position: relative;
+
             display: flex;
+
             flex-direction: column;
+
             min-height: 280px;
+
             padding: 30px;
+
             overflow: hidden;
 
             background:
                     linear-gradient(
                             135deg,
-                            rgba(26,26,26,0.98),
-                            rgba(14,14,14,0.98)
+                            rgba(26,26,26,0.96),
+                            rgba(14,14,14,0.96)
                     );
 
             border: 1px solid rgba(255,255,255,0.06);
+
             border-left: 3px solid #d4af37;
 
             color: #eeeeee;
+
             text-decoration: none;
+
+            backdrop-filter: blur(2px);
 
             transition:
                     transform 0.25s ease,
                     border-color 0.25s ease,
-                    background 0.25s ease;
+                    background 0.25s ease,
+                    box-shadow 0.25s ease;
         }
 
         .note-card:hover {
@@ -169,20 +249,25 @@
 
             border-color: rgba(212,175,55,0.5);
 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.35);
+
             background:
                     linear-gradient(
                             135deg,
-                            rgba(33,33,33,0.99),
-                            rgba(17,17,17,0.99)
+                            rgba(33,33,33,0.98),
+                            rgba(17,17,17,0.98)
                     );
         }
 
         .note-number {
             display: block;
+
             color: #d4af37;
 
             font-family: 'Cinzel', serif;
+
             font-size: 0.72rem;
+
             letter-spacing: 3px;
 
             margin-bottom: 17px;
@@ -190,19 +275,27 @@
 
         .note-card h2 {
             font-family: 'Cinzel', serif;
+
             font-size: 1.22rem;
+
             line-height: 1.45;
+
             font-weight: 500;
+
             letter-spacing: 1px;
 
             color: #ffffff;
+
             margin-bottom: 16px;
         }
 
         .note-card p {
             color: #aaaaaa;
+
             line-height: 1.7;
+
             font-size: 0.93rem;
+
             margin-bottom: 25px;
         }
 
@@ -212,7 +305,9 @@
             color: #d4af37;
 
             font-family: 'Cinzel', serif;
+
             font-size: 0.73rem;
+
             letter-spacing: 1.6px;
         }
 
@@ -222,47 +317,66 @@
             position: absolute;
 
             width: 130px;
+
             height: 130px;
 
             right: -65px;
+
             bottom: -65px;
 
             border: 1px solid rgba(212,175,55,0.08);
+
             border-radius: 50%;
         }
 
         .last-card {
             grid-column: 1 / -1;
+
             width: calc(50% - 12px);
+
             justify-self: center;
         }
 
-        @media (max-width: 1050px) {
+
+        /* =========================
+           RESPONSIVE
+           ========================= */
+
+        @media (max-width: 1100px) {
 
             nav {
                 padding: 48px 20px 16px;
             }
 
             nav ul {
-                gap: 12px 18px;
+                gap: 12px 16px;
+            }
+
+            nav a {
+                font-size: 0.68rem;
             }
 
             .lang-switch {
                 top: 17px;
+
                 right: 20px;
+
                 transform: none;
             }
+
         }
 
         @media (max-width: 760px) {
 
             .container {
                 margin: 48px auto;
+
                 padding: 0 18px 60px;
             }
 
             .page-heading h1 {
                 font-size: 1.8rem;
+
                 letter-spacing: 2px;
             }
 
@@ -276,19 +390,37 @@
 
             .last-card {
                 grid-column: auto;
+
                 width: 100%;
             }
+
         }
+
     </style>
 </head>
+
 
 <body>
 
 
+<!-- =========================
+     NAVIGATION
+     ========================= -->
+
 <nav>
 
-    <!-- ENGLISH MENU -->
+
+    <!-- =========================
+         ENGLISH MENU
+         ========================= -->
+
     <ul th:if="${lang != 'de'}">
+
+        <li>
+            <a th:href="@{/(lang='en')}">
+                [HOME]
+            </a>
+        </li>
 
         <li>
             <a th:href="@{/biography(lang='en')}">
@@ -330,8 +462,17 @@
     </ul>
 
 
-    <!-- GERMAN MENU -->
+    <!-- =========================
+         GERMAN MENU
+         ========================= -->
+
     <ul th:if="${lang == 'de'}">
+
+        <li>
+            <a th:href="@{/(lang='de')}">
+                [HOME]
+            </a>
+        </li>
 
         <li>
             <a th:href="@{/biography(lang='de')}">
@@ -373,7 +514,10 @@
     </ul>
 
 
-    <!-- LANGUAGE SWITCH -->
+    <!-- =========================
+         LANGUAGE SWITCH
+         ========================= -->
+
     <div class="lang-switch">
 
         <a th:href="@{/lecture-notes(lang='en')}"
@@ -393,12 +537,17 @@
 </nav>
 
 
+
+<!-- =========================
+     MAIN CONTENT
+     ========================= -->
+
 <main class="container">
 
 
-    <!-- ======================= -->
-    <!-- ENGLISH -->
-    <!-- ======================= -->
+    <!-- =========================
+         ENGLISH
+         ========================= -->
 
     <div th:if="${lang != 'de'}">
 
@@ -557,9 +706,10 @@
     </div>
 
 
-    <!-- ======================= -->
-    <!-- GERMAN -->
-    <!-- ======================= -->
+
+    <!-- =========================
+         GERMAN
+         ========================= -->
 
     <div th:if="${lang == 'de'}">
 
@@ -722,7 +872,9 @@
 
     </div>
 
+
 </main>
+
 
 </body>
 </html>

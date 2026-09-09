@@ -19,6 +19,7 @@
           rel="stylesheet">
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -32,13 +33,32 @@
 
         body {
             min-height: 100vh;
-            background: #111111;
-            color: #eeeeee;
+
             font-family: Georgia, serif;
+
+            color: #eeeeee;
+
+            background-image:
+                    linear-gradient(
+                            rgba(8, 8, 8, 0.72),
+                            rgba(8, 8, 8, 0.86)
+                    ),
+                    url('/images/essays-bg.jpg');
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
         }
+
+
+        /* =========================
+           NAVIGATION
+           ========================= */
 
         nav {
             width: 100%;
+
             min-height: 62px;
 
             display: flex;
@@ -49,7 +69,7 @@
 
             padding: 0 150px 0 20px;
 
-            background: rgba(0, 0, 0, 0.86);
+            background: rgba(0, 0, 0, 0.84);
 
             border-bottom: 1px solid rgba(255,255,255,0.08);
 
@@ -66,7 +86,10 @@
 
             list-style: none;
 
-            gap: 26px;
+            gap: 24px;
+
+            margin: 0;
+            padding: 0;
         }
 
         nav a {
@@ -76,9 +99,9 @@
 
             text-decoration: none;
 
-            font-size: 0.76rem;
+            font-size: 0.74rem;
 
-            letter-spacing: 1.8px;
+            letter-spacing: 1.7px;
 
             transition: color 0.25s ease;
         }
@@ -91,6 +114,11 @@
             color: #d4af37;
         }
 
+
+        /* =========================
+           LANGUAGE SWITCH
+           ========================= */
+
         .lang-switch {
             position: absolute;
 
@@ -98,6 +126,11 @@
             top: 50%;
 
             transform: translateY(-50%);
+
+            display: flex;
+            align-items: center;
+
+            gap: 8px;
 
             font-family: 'Cinzel', serif;
 
@@ -110,8 +143,6 @@
 
         .lang-switch a {
             color: #777777;
-
-            margin: 0 5px;
         }
 
         .lang-switch a.active {
@@ -121,6 +152,11 @@
         .separator {
             color: #555555;
         }
+
+
+        /* =========================
+           PAGE
+           ========================= */
 
         .container {
             max-width: 1120px;
@@ -146,17 +182,26 @@
             letter-spacing: 4px;
 
             margin-bottom: 14px;
+
+            color: #ffffff;
         }
 
         .page-heading p {
-            max-width: 720px;
+            max-width: 760px;
 
             margin: 0 auto;
 
-            color: #aaaaaa;
+            color: #b0b0b0;
 
             line-height: 1.75;
+
+            font-size: 0.96rem;
         }
+
+
+        /* =========================
+           ESSAY GRID
+           ========================= */
 
         .essay-grid {
             display: grid;
@@ -164,20 +209,29 @@
             grid-template-columns: repeat(2, minmax(0, 1fr));
 
             gap: 28px;
+
+            align-items: start;
         }
+
+
+        /* =========================
+           ESSAY CARD
+           ========================= */
 
         .essay-card {
             display: block;
 
-            background: #171717;
+            background: rgba(15, 15, 15, 0.88);
 
-            border: 1px solid rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.08);
 
             text-decoration: none;
 
             color: #eeeeee;
 
             overflow: hidden;
+
+            backdrop-filter: blur(3px);
 
             transition:
                     transform 0.3s ease,
@@ -190,19 +244,36 @@
 
             border-color: rgba(212,175,55,0.55);
 
-            box-shadow: 0 18px 35px rgba(0,0,0,0.35);
+            box-shadow: 0 18px 35px rgba(0,0,0,0.42);
+        }
+
+
+        /* =========================
+           IMAGE
+           ========================= */
+
+        .essay-image-wrapper {
+            width: 100%;
+
+            height: 300px;
+
+            overflow: hidden;
+
+            background: #0c0c0c;
         }
 
         .essay-cover {
             width: 100%;
 
-            height: 280px;
-
-            object-fit: cover;
+            height: 100%;
 
             display: block;
 
-            filter: brightness(0.88);
+            object-fit: cover;
+
+            object-position: center;
+
+            filter: brightness(0.90);
 
             transition:
                     transform 0.4s ease,
@@ -210,10 +281,15 @@
         }
 
         .essay-card:hover .essay-cover {
-            transform: scale(1.025);
+            transform: scale(1.035);
 
             filter: brightness(1);
         }
+
+
+        /* =========================
+           CARD CONTENT
+           ========================= */
 
         .essay-content {
             padding: 28px;
@@ -248,9 +324,9 @@
         }
 
         .essay-content p {
-            color: #aaaaaa;
+            color: #b2b2b2;
 
-            line-height: 1.7;
+            line-height: 1.75;
 
             font-size: 0.95rem;
 
@@ -267,14 +343,23 @@
             letter-spacing: 1.5px;
         }
 
-        @media (max-width: 1050px) {
+
+        /* =========================
+           MOBILE
+           ========================= */
+
+        @media (max-width: 1100px) {
 
             nav {
                 padding: 48px 20px 16px;
             }
 
             nav ul {
-                gap: 12px 18px;
+                gap: 12px 16px;
+            }
+
+            nav a {
+                font-size: 0.68rem;
             }
 
             .lang-switch {
@@ -305,20 +390,29 @@
                 grid-template-columns: 1fr;
             }
 
-            .essay-cover {
+            .essay-image-wrapper {
                 height: 230px;
             }
 
         }
+
     </style>
 </head>
+
 
 <body>
 
 
+<!-- =========================
+     NAVIGATION
+     ========================= -->
+
 <nav>
 
-    <!-- ENGLISH MENU -->
+
+    <!-- =========================
+         ENGLISH MENU
+         ========================= -->
 
     <ul th:if="${lang != 'de'}">
 
@@ -368,7 +462,9 @@
     </ul>
 
 
-    <!-- GERMAN MENU -->
+    <!-- =========================
+         GERMAN MENU
+         ========================= -->
 
     <ul th:if="${lang == 'de'}">
 
@@ -418,7 +514,9 @@
     </ul>
 
 
-    <!-- LANGUAGE SWITCH -->
+    <!-- =========================
+         LANGUAGE SWITCH
+         ========================= -->
 
     <div class="lang-switch">
 
@@ -439,6 +537,10 @@
 </nav>
 
 
+
+<!-- =========================
+     MAIN CONTENT
+     ========================= -->
 
 <main class="container">
 
@@ -465,16 +567,24 @@
         <div class="essay-grid">
 
 
-            <!-- ESSAY 01 -->
+            <!-- =========================
+                 ESSAY 01
+                 ========================= -->
 
             <a class="essay-card"
                href="https://www.linkedin.com/pulse/revisiting-machs-principle-21st-century-melih-g%C3%BCm%C3%BC%C5%9F-sn8mf"
                target="_blank"
                rel="noopener noreferrer">
 
-                <img class="essay-cover"
-                     src="/images/essays/machs-principle.png"
-                     alt="Revisiting Mach's Principle in the 21st Century">
+                <div class="essay-image-wrapper">
+
+                    <img class="essay-cover"
+                         th:src="@{/images/ernst-mach.png}"
+                         src="/images/ernst-mach.png"
+                         alt="Ernst Mach - Revisiting Mach's Principle in the 21st Century">
+
+                </div>
+
 
                 <div class="essay-content">
 
@@ -488,8 +598,8 @@
 
                     <p>
                         A reflection on Mach's principle, inertia and the
-                        conceptual relationship between matter, motion and
-                        gravitation in modern theoretical physics.
+                        conceptual relationship between matter, motion
+                        and gravitation in modern theoretical physics.
                     </p>
 
                     <span class="read-more">
@@ -529,16 +639,24 @@
         <div class="essay-grid">
 
 
-            <!-- ESSAY 01 -->
+            <!-- =========================
+                 ESSAY 01
+                 ========================= -->
 
             <a class="essay-card"
                href="https://www.linkedin.com/pulse/revisiting-machs-principle-21st-century-melih-g%C3%BCm%C3%BC%C5%9F-sn8mf"
                target="_blank"
                rel="noopener noreferrer">
 
-                <img class="essay-cover"
-                     src="/images/essays/machs-principle.png"
-                     alt="Revisiting Mach's Principle in the 21st Century">
+                <div class="essay-image-wrapper">
+
+                    <img class="essay-cover"
+                         th:src="@{/images/ernst-mach.png}"
+                         src="/images/ernst-mach.png"
+                         alt="Ernst Mach - Revisiting Mach's Principle in the 21st Century">
+
+                </div>
+
 
                 <div class="essay-content">
 

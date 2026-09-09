@@ -12,13 +12,14 @@
         Contact - Melih Gümüş
     </title>
 
-    <!-- Cinzel -->
+    <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&display=swap"
           rel="stylesheet">
 
-    <!-- Font Awesome Icons -->
+    <!-- Font Awesome -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -36,10 +37,13 @@
         }
 
         body {
+            min-height: 100vh;
+
             font-family: Georgia, serif;
+
             color: #eeeeee;
 
-            background:
+            background-image:
                     linear-gradient(
                             rgba(8, 8, 8, 0.72),
                             rgba(8, 8, 8, 0.82)
@@ -59,7 +63,8 @@
 
         nav {
             width: 100%;
-            height: 62px;
+
+            min-height: 62px;
 
             display: flex;
             justify-content: center;
@@ -67,23 +72,28 @@
 
             position: relative;
 
-            background: rgba(0, 0, 0, 0.72);
+            padding: 0 150px 0 20px;
+
+            background: rgba(0, 0, 0, 0.78);
 
             border-bottom: 1px solid rgba(255,255,255,0.08);
 
-            backdrop-filter: blur(3px);
+            backdrop-filter: blur(4px);
 
             z-index: 10;
         }
 
         nav ul {
             display: flex;
+
             justify-content: center;
             align-items: center;
 
+            flex-wrap: wrap;
+
             list-style: none;
 
-            gap: 28px;
+            gap: 24px;
 
             margin: 0;
             padding: 0;
@@ -96,14 +106,18 @@
 
             text-decoration: none;
 
-            font-size: 0.78rem;
+            font-size: 0.74rem;
 
-            letter-spacing: 2px;
+            letter-spacing: 1.7px;
 
             transition: color 0.25s ease;
         }
 
         nav a:hover {
+            color: #d4af37;
+        }
+
+        nav a.current-page {
             color: #d4af37;
         }
 
@@ -130,6 +144,8 @@
             font-size: 0.76rem;
 
             letter-spacing: 2px;
+
+            white-space: nowrap;
         }
 
         .lang-switch a {
@@ -175,6 +191,8 @@
             letter-spacing: 4px;
 
             margin-bottom: 15px;
+
+            color: #ffffff;
         }
 
         .intro {
@@ -196,11 +214,15 @@
             display: grid;
 
             grid-template-columns:
-                repeat(auto-fit, minmax(250px, 1fr));
+                    repeat(auto-fit, minmax(250px, 1fr));
 
             gap: 18px;
         }
 
+
+        /* =========================
+           CONTACT CARD
+           ========================= */
 
         .contact-card {
             display: flex;
@@ -217,22 +239,30 @@
 
             color: #eeeeee;
 
-            background: rgba(12, 12, 12, 0.68);
+            background: rgba(12, 12, 12, 0.72);
+
+            border: 1px solid rgba(255,255,255,0.04);
 
             border-left: 2px solid #d4af37;
 
-            transition: 0.25s ease;
+            transition:
+                    transform 0.25s ease,
+                    background 0.25s ease,
+                    border-color 0.25s ease;
         }
 
         .contact-card:hover {
             transform: translateY(-3px);
 
-            background: rgba(25, 25, 25, 0.82);
-        }
+            background: rgba(25, 25, 25, 0.88);
 
+            border-color: rgba(212,175,55,0.25);
+        }
 
         .contact-icon {
             width: 45px;
+
+            flex-shrink: 0;
 
             text-align: center;
 
@@ -240,7 +270,6 @@
 
             color: #d4af37;
         }
-
 
         .contact-text {
             display: flex;
@@ -273,20 +302,14 @@
            MOBILE
            ========================= */
 
-        @media (max-width: 900px) {
+        @media (max-width: 1100px) {
 
             nav {
-                height: auto;
-
-                min-height: 95px;
-
-                padding: 42px 20px 15px;
+                padding: 48px 20px 16px;
             }
 
             nav ul {
-                flex-wrap: wrap;
-
-                gap: 10px 15px;
+                gap: 12px 16px;
             }
 
             nav a {
@@ -301,10 +324,24 @@
                 transform: none;
             }
 
+        }
+
+        @media (max-width: 760px) {
+
             .container {
                 margin: 35px 15px;
 
                 padding: 30px 20px 50px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+
+                letter-spacing: 2px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
             }
 
         }
@@ -323,9 +360,17 @@
 <nav>
 
 
-    <!-- ENGLISH -->
+    <!-- =========================
+         ENGLISH
+         ========================= -->
 
     <ul th:if="${lang != 'de'}">
+
+        <li>
+            <a th:href="@{/(lang='en')}">
+                [HOME]
+            </a>
+        </li>
 
         <li>
             <a th:href="@{/biography(lang='en')}">
@@ -358,7 +403,8 @@
         </li>
 
         <li>
-            <a th:href="@{/contact(lang='en')}">
+            <a class="current-page"
+               th:href="@{/contact(lang='en')}">
                 [CONTACT]
             </a>
         </li>
@@ -366,9 +412,17 @@
     </ul>
 
 
-    <!-- GERMAN -->
+    <!-- =========================
+         GERMAN
+         ========================= -->
 
     <ul th:if="${lang == 'de'}">
+
+        <li>
+            <a th:href="@{/(lang='de')}">
+                [HOME]
+            </a>
+        </li>
 
         <li>
             <a th:href="@{/biography(lang='de')}">
@@ -401,7 +455,8 @@
         </li>
 
         <li>
-            <a th:href="@{/contact(lang='de')}">
+            <a class="current-page"
+               th:href="@{/contact(lang='de')}">
                 [KONTAKT]
             </a>
         </li>
@@ -409,7 +464,9 @@
     </ul>
 
 
-    <!-- LANGUAGE -->
+    <!-- =========================
+         LANGUAGE SWITCH
+         ========================= -->
 
     <div class="lang-switch">
 
@@ -432,17 +489,19 @@
 
 
 <!-- =========================
-     MAIN
+     MAIN CONTENT
      ========================= -->
 
 <div class="container">
 
 
-    <!-- ENGLISH -->
+    <!-- =========================
+         ENGLISH
+         ========================= -->
 
     <div th:if="${lang != 'de'}">
 
-        <h1>Contact & Profiles</h1>
+        <h1>Contact &amp; Profiles</h1>
 
         <p class="intro">
             Academic profiles, media contributions,
@@ -463,6 +522,7 @@
                 </div>
 
                 <div class="contact-text">
+
                     <div class="contact-name">
                         Email
                     </div>
@@ -470,6 +530,7 @@
                     <div class="contact-info">
                         melihspir@gmail.com
                     </div>
+
                 </div>
 
             </a>
@@ -479,13 +540,15 @@
 
             <a class="contact-card"
                href="https://sciprofiles.com/profile/4956418"
-               target="_blank">
+               target="_blank"
+               rel="noopener noreferrer">
 
                 <div class="contact-icon">
                     <i class="fa-solid fa-flask"></i>
                 </div>
 
                 <div class="contact-text">
+
                     <div class="contact-name">
                         SciProfiles
                     </div>
@@ -493,6 +556,7 @@
                     <div class="contact-info">
                         Academic Profile
                     </div>
+
                 </div>
 
             </a>
@@ -502,13 +566,15 @@
 
             <a class="contact-card"
                href="https://www.linkedin.com/in/melih-gümüş-9b41201b4"
-               target="_blank">
+               target="_blank"
+               rel="noopener noreferrer">
 
                 <div class="contact-icon">
                     <i class="fa-brands fa-linkedin"></i>
                 </div>
 
                 <div class="contact-text">
+
                     <div class="contact-name">
                         LinkedIn
                     </div>
@@ -516,6 +582,7 @@
                     <div class="contact-info">
                         Professional Profile
                     </div>
+
                 </div>
 
             </a>
@@ -525,13 +592,15 @@
 
             <a class="contact-card"
                href="https://www.youtube.com/@mellysama6263"
-               target="_blank">
+               target="_blank"
+               rel="noopener noreferrer">
 
                 <div class="contact-icon">
                     <i class="fa-brands fa-youtube"></i>
                 </div>
 
                 <div class="contact-text">
+
                     <div class="contact-name">
                         YouTube
                     </div>
@@ -539,6 +608,7 @@
                     <div class="contact-info">
                         Channel
                     </div>
+
                 </div>
 
             </a>
@@ -548,13 +618,15 @@
 
             <a class="contact-card"
                href="https://www.instagram.com/koto__wari?igsi=MXd0Z3doOTM1NGJhdg=="
-               target="_blank">
+               target="_blank"
+               rel="noopener noreferrer">
 
                 <div class="contact-icon">
                     <i class="fa-brands fa-instagram"></i>
                 </div>
 
                 <div class="contact-text">
+
                     <div class="contact-name">
                         Instagram
                     </div>
@@ -562,6 +634,7 @@
                     <div class="contact-info">
                         @koto__wari
                     </div>
+
                 </div>
 
             </a>
@@ -571,13 +644,15 @@
 
             <a class="contact-card"
                href="https://evrimagaci.org/kotowari"
-               target="_blank">
+               target="_blank"
+               rel="noopener noreferrer">
 
                 <div class="contact-icon">
                     <i class="fa-solid fa-seedling"></i>
                 </div>
 
                 <div class="contact-text">
+
                     <div class="contact-name">
                         Evrim Ağacı
                     </div>
@@ -585,6 +660,7 @@
                     <div class="contact-info">
                         Author Profile
                     </div>
+
                 </div>
 
             </a>
@@ -594,13 +670,15 @@
 
             <a class="contact-card"
                href="https://sapiensmedya.com/author/MelihGumus"
-               target="_blank">
+               target="_blank"
+               rel="noopener noreferrer">
 
                 <div class="contact-icon">
                     <i class="fa-solid fa-newspaper"></i>
                 </div>
 
                 <div class="contact-text">
+
                     <div class="contact-name">
                         Sapiens Media
                     </div>
@@ -608,6 +686,7 @@
                     <div class="contact-info">
                         Author Page
                     </div>
+
                 </div>
 
             </a>
@@ -617,13 +696,15 @@
 
             <a class="contact-card"
                href="https://drive.google.com/drive/folders/1YX2b0iLFE3-kB3GuJiITcdEf8_MImH6W?usp=drive_link"
-               target="_blank">
+               target="_blank"
+               rel="noopener noreferrer">
 
                 <div class="contact-icon">
                     <i class="fa-brands fa-google-drive"></i>
                 </div>
 
                 <div class="contact-text">
+
                     <div class="contact-name">
                         Lecture Notes
                     </div>
@@ -631,6 +712,7 @@
                     <div class="contact-info">
                         Google Drive Archive
                     </div>
+
                 </div>
 
             </a>
@@ -642,11 +724,13 @@
 
 
 
-    <!-- GERMAN -->
+    <!-- =========================
+         GERMAN
+         ========================= -->
 
     <div th:if="${lang == 'de'}">
 
-        <h1>Kontakt & Profile</h1>
+        <h1>Kontakt &amp; Profile</h1>
 
         <p class="intro">
             Akademische Profile, Medienbeiträge,
@@ -657,6 +741,8 @@
         <div class="contact-grid">
 
 
+            <!-- EMAIL -->
+
             <a class="contact-card"
                href="mailto:melihspir@gmail.com">
 
@@ -665,6 +751,7 @@
                 </div>
 
                 <div class="contact-text">
+
                     <div class="contact-name">
                         E-Mail
                     </div>
@@ -672,20 +759,25 @@
                     <div class="contact-info">
                         melihspir@gmail.com
                     </div>
+
                 </div>
 
             </a>
 
 
+            <!-- SCIPROFILES -->
+
             <a class="contact-card"
                href="https://sciprofiles.com/profile/4956418"
-               target="_blank">
+               target="_blank"
+               rel="noopener noreferrer">
 
                 <div class="contact-icon">
                     <i class="fa-solid fa-flask"></i>
                 </div>
 
                 <div class="contact-text">
+
                     <div class="contact-name">
                         SciProfiles
                     </div>
@@ -693,20 +785,25 @@
                     <div class="contact-info">
                         Akademisches Profil
                     </div>
+
                 </div>
 
             </a>
 
 
+            <!-- LINKEDIN -->
+
             <a class="contact-card"
                href="https://www.linkedin.com/in/melih-gümüş-9b41201b4"
-               target="_blank">
+               target="_blank"
+               rel="noopener noreferrer">
 
                 <div class="contact-icon">
                     <i class="fa-brands fa-linkedin"></i>
                 </div>
 
                 <div class="contact-text">
+
                     <div class="contact-name">
                         LinkedIn
                     </div>
@@ -714,20 +811,25 @@
                     <div class="contact-info">
                         Berufliches Profil
                     </div>
+
                 </div>
 
             </a>
 
 
+            <!-- YOUTUBE -->
+
             <a class="contact-card"
                href="https://www.youtube.com/@mellysama6263"
-               target="_blank">
+               target="_blank"
+               rel="noopener noreferrer">
 
                 <div class="contact-icon">
                     <i class="fa-brands fa-youtube"></i>
                 </div>
 
                 <div class="contact-text">
+
                     <div class="contact-name">
                         YouTube
                     </div>
@@ -735,20 +837,25 @@
                     <div class="contact-info">
                         Kanal
                     </div>
+
                 </div>
 
             </a>
 
 
+            <!-- INSTAGRAM -->
+
             <a class="contact-card"
                href="https://www.instagram.com/koto__wari?igsi=MXd0Z3doOTM1NGJhdg=="
-               target="_blank">
+               target="_blank"
+               rel="noopener noreferrer">
 
                 <div class="contact-icon">
                     <i class="fa-brands fa-instagram"></i>
                 </div>
 
                 <div class="contact-text">
+
                     <div class="contact-name">
                         Instagram
                     </div>
@@ -756,20 +863,25 @@
                     <div class="contact-info">
                         @koto__wari
                     </div>
+
                 </div>
 
             </a>
 
 
+            <!-- EVRIM AGACI -->
+
             <a class="contact-card"
                href="https://evrimagaci.org/kotowari"
-               target="_blank">
+               target="_blank"
+               rel="noopener noreferrer">
 
                 <div class="contact-icon">
                     <i class="fa-solid fa-seedling"></i>
                 </div>
 
                 <div class="contact-text">
+
                     <div class="contact-name">
                         Evrim Ağacı
                     </div>
@@ -777,20 +889,25 @@
                     <div class="contact-info">
                         Autorenprofil
                     </div>
+
                 </div>
 
             </a>
 
 
+            <!-- SAPIENS MEDIA -->
+
             <a class="contact-card"
                href="https://sapiensmedya.com/author/MelihGumus"
-               target="_blank">
+               target="_blank"
+               rel="noopener noreferrer">
 
                 <div class="contact-icon">
                     <i class="fa-solid fa-newspaper"></i>
                 </div>
 
                 <div class="contact-text">
+
                     <div class="contact-name">
                         Sapiens Media
                     </div>
@@ -798,20 +915,25 @@
                     <div class="contact-info">
                         Autorenseite
                     </div>
+
                 </div>
 
             </a>
 
 
+            <!-- LECTURE NOTES -->
+
             <a class="contact-card"
                href="https://drive.google.com/drive/folders/1YX2b0iLFE3-kB3GuJiITcdEf8_MImH6W?usp=drive_link"
-               target="_blank">
+               target="_blank"
+               rel="noopener noreferrer">
 
                 <div class="contact-icon">
                     <i class="fa-brands fa-google-drive"></i>
                 </div>
 
                 <div class="contact-text">
+
                     <div class="contact-name">
                         Vorlesungsskripte
                     </div>
@@ -819,6 +941,7 @@
                     <div class="contact-info">
                         Google-Drive-Archiv
                     </div>
+
                 </div>
 
             </a>
